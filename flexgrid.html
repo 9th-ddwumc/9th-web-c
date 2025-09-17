@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexGrid</title>
+</head>
+<style>
+    body{
+        margin:0;
+
+    }
+    .header{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    .header__title{
+        background-color: rgb(4, 4, 47);
+        color:white;
+        font-size: 30px;
+        width: 30%;
+        padding-top: 10px;
+        padding-bottom:10px;
+    }
+    .header__menu{
+        background-color: rgb(255, 104, 104);
+        color:white;
+        font-size: 30px;
+        width:70%;
+        padding-top: 10px;
+        padding-bottom:10px;
+    }
+    .hero{
+        background-color: rgb(84, 137, 211);
+        color: white;
+        font-size: 30px;
+        padding-top: 100px;
+        padding-bottom: 100px;
+        text-align: center;
+    }
+    .main{
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-rows: 25% 25% 25% 25%;
+        height: 320px;
+    }
+    .main__content{
+        grid-column: 1/span 2;
+        grid-row: 1/span 4;
+        background-color: rgb(44, 45, 72);
+        color: white;
+        font-size: 30px;
+        text-align: center;
+        line-height: 300px;
+    }
+    .main__image{
+        background-color: rgb(205, 253, 248);
+        color: black;
+        font-size: 30px;
+        grid-column: 4/span 1;
+        grid-row: 1/span 2;
+        text-align: center;
+        line-height: 150px;
+    }
+    .main__extra{
+        background-color: rgb(93, 165, 141);
+        color: black;
+        font-size: 30px;
+        grid-column: 4/span 1;
+        grid-row: 3/span 2;
+        text-align: center;
+        line-height: 150px;
+    }
+    .footer{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: rgb(255, 233, 66);
+        color: black;
+        font-size: 30px;
+        padding-top: 30px;
+        padding-bottom:30px;
+        text-align: center;
+
+    }
+
+</style>
+<body>
+    <header class="header">
+        <div class="header__title">HEADER</div>
+        <div class="header__menu">MENU</div>
+    </header>
+    
+    <div class="hero">HERO</div>
+    
+    <main class="main">
+        <div class="main__content">MAIN</div>
+        <div class="main__image">IMAGE</div>
+        <div class="main__extra">EXTRA</div>
+    </main>
+    <footer class="footer">BANNER</footer>
+</body>
+</html>
