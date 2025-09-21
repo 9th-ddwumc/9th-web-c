@@ -7,12 +7,19 @@
 body {
     font-family: sans-serif;
     text-align: center;
+    background-color: aliceblue;
 }
 
 header {
     font-size: 35px;
     font-weight: bold;
     margin: 50px;
+}
+
+hr {
+    width: 50%;
+    margin: 20px auto;
+    border: 1px solid gray;
 }
 
 #todo-input {
@@ -23,7 +30,6 @@ header {
     margin: 20px auto;
     padding: 15px;
     border: 3px solid black;
-    border-radius: 8px;
 }
 
 main {
@@ -34,8 +40,8 @@ main {
 }
 
 .list-container {
-    width: 300px;
-    border: 1px solid #ccc;
+    width: 200px;
+    border: none;
     border-radius: 8px;
     padding: 10px;
     text-align: center;
@@ -48,15 +54,18 @@ main {
 }
 
 .list-container li {
-    margin-top: 10px;
+    margin: 10px auto;
+    padding-bottom: 5px;
+    border-bottom: 2px solid gray;
+    display: flex;
+    justify-content: space-between;
 }
 
 button {
     border: 1.5px solid black;
-    background: lightsalmon;
+    background: lightgray;
     cursor: pointer;
     font-size: 12px;
     padding: 2px;
     margin-left: 10px;
-    border-radius: 4px;
 }
