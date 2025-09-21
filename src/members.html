@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>반응형 내비게이션</title>
+    <title>Members</title>
     <link rel="stylesheet" href="style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="nav">
         <ul class="nav__list">
-            <li class="nav__item"><a href="index.html" class="nav__link">🔥</a></li>
-            <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
-            <li class="nav__item--active"><a href="members.html" class="nav__link">Members</a></li>
-            <li class="nav__item"><a href="faq.html" class="nav__link">FAQ</a></li>
+        <li class="nav__item"><a href="index.html" class="nav__link">🔥</a></li>
+        <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
+        <li class="nav__item nav__item--active"><a href="members.html" class="nav__link">Members</a></li>
+        <li class="nav__item"><a href="faq.html" class="nav__link">FAQ</a></li>
         </ul>
     </nav>
+
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <label for="nav-toggle" class="nav__hamburger"></label>
+
+    <aside class="sidebar">
+        <ul class="sidebar__menu">
+        <li class="sidebar__item"><a href="index.html">Home</a></li>
+        <li class="sidebar__item"><a href="projects.html">Projects</a></li>
+        <li class="sidebar__item sidebar__item--active"><a href="members.html">Members</a></li>
+        <li class="sidebar__item"><a href="faq.html">FAQ</a></li>
+        </ul>
+    </aside>
 </body>
 </html>
