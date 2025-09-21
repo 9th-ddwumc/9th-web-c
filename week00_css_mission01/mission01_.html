@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mission01.css">
+</head>
+<body>
+    <nav class="bar">
+        <button id="home">home</button>  
+        <button id="Project">Project</button>
+        <button id="Members">Member</button>
+        <button id="FAQ">FAQ</button>
+    </nav>
+
+     <div class="hamburger">☰
+
+    <div class ="sidebar">
+        <ul>
+           <li><button>home</button></li>
+           <li><button>project</button></li>
+           <li><button>members</button></li>
+           <li><button>FAQ</button></li>
+        </ul>
+    </div>
+    </div>
+  <script>
+    const buttons = document.querySelectorAll('.bar button');
+    const sidebar = document.querySelector('.sidebar');
+    const buttons_2=document.querySelectorAll('.sidebar button')
+    const hamburger=document.querySelector('.hamburger');
+
+    hamburger.addEventListener('click',()=>{
+        if(sidebar.classList.contains('show')){
+            sidebar.classList.remove('show');
+        }
+        else{
+            sidebar.classList.add('show');
+        }
+    })
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+    
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+
+    });
+      buttons_2.forEach(btn => {
+      btn.addEventListener('click', () => {
+    
+        buttons_2.forEach(b => b.classList.remove('active_2'));
+        btn.classList.add('active_2');
+      });
+    });
+  </script>
+</body>
+</html>
