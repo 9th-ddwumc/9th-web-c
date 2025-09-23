@@ -1,4 +1,4 @@
-const todoInput = document.getElementById('todo-container_input') as HTMLInputElement;
+const todoInput = document.getElementById('todo-container_gitinput') as HTMLInputElement;
 const todoForm = document.getElementById('todo-form') as HTMLFormElement;
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
 const doneList = document.getElementById('done-list')as HTMLUListElement;
