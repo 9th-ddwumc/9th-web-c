@@ -1,13 +1,16 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import './App.css'
-import TodoBefore from './components/TodoBefore.tsx';
-import Todo from './components/Todo.tsx'
-import { TodoProvider } from './context/TodoContext.tsx';
+import ContextPage from './ContextPage'
+
 function App() {
+  const [count, setCount] = useState(0)
 
   return (
-    <TodoProvider>
-    <Todo/>
-    </TodoProvider>
+    <>
+      <ContextPage></ContextPage>
+    </>
   )
 }
 
