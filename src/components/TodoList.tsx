@@ -1,4 +1,4 @@
-import type { TTodo } from "../types/todo";
+import type { TTodo } from "../types/todo"; 
 
 interface TodoListProps{
     title:string;
@@ -10,7 +10,7 @@ interface TodoListProps{
 
 const TodoList = ({title, todos, buttonLabel, buttonColor, onClick}: TodoListProps)=> {
     return(
-        <div className="render-container-__section">
+        <div className="render-container__section">
             <h2 className="render-container__title">{title}</h2>
             <ul id='todo-List' className="render-container__list">
                 {todos?.map(todo => 
