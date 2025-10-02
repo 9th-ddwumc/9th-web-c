@@ -10,8 +10,7 @@ const LINKS = [
 
 export const Navbar = () => {
     return (
-        <nav className="bg-black text-blue-300 p-5 pt-6">
-            <span className="text-2xl font-bold mr-8">Movie App</span>
+        <nav className="bg-gray-900 text-blue-300 p-5 pt-6">
             <span>
             {LINKS.map((link) => (
                 <NavLink 

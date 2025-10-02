@@ -53,32 +53,35 @@ export default function MoviePage() {
 
     return (
         <>
-            <div className='flex items-center justify-center gap-6 mt-5'>
-                <button
-                className="m-4 px-4 py-2 bg-black text-white rounded hover:bg-blue-400 disabled:bg-gray-400
-                transition-all duration-200 disabled:cursor-not-allowed cursor-pointer"
-                onClick={() => setPage((prev) => prev - 1)}
-                disabled={page === 1}>{`<`}</button>
-                <span>{page} 페이지</span>
-                <button
-                className="m-4 px-4 py-2 bg-black text-white rounded hover:bg-blue-400
-                transition-all duration-200 cursor-pointer"
-                onClick={() => setPage((prev) => prev + 1)}>{`>`}</button>
+            <div className="bg-gray-900">
+                <div className='flex items-center justify-center gap-6'>
+                    <button
+                        className="m-4 px-4 py-2 bg-blue-400 text-white font-bold rounded hover:bg-blue-200 disabled:bg-gray-500
+                        transition-all duration-200 disabled:cursor-not-allowed cursor-pointer"
+                        onClick={() => setPage((prev) => prev - 1)}
+                        disabled={page === 1}>{`<`}</button>
+                    <span className='text-white font-bold'>{page} 페이지</span>
+                    <button
+                        className="m-4 px-4 py-2 bg-blue-400 text-white font-bold rounded hover:bg-blue-200
+                        transition-all duration-200 cursor-pointer"
+                        onClick={() => setPage((prev) => prev + 1)}>{`>`}</button>
+                </div>
+
+                {isPending && (
+                    <div className='flex justify-center items-center h-[81vh]'>
+                        <LoadingSpinner />
+                    </div>
+                )}
+
+                {!isPending && (
+                    <div className='p-10 grid gap-4 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
+                    {movies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                    </div>
+                )}
             </div>
-
-            {isPending && (
-                <div className='flex justify-center items-center h-[70vh]'>
-                    <LoadingSpinner />
-                </div>
-            )}
-
-            {!isPending && (
-                <div className='p-10 grid gap-4 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
-                {movies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                ))}
-                </div>
-            )}
+            
             
         </>
         
