@@ -74,7 +74,7 @@ export default function MoviePage() {
                 )}
 
                 {!isPending && (
-                    <div className='p-10 grid gap-4 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
+                    <div className='p-10 grid gap-8 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
                     {movies.map((movie) => (
                         <MovieCard key={movie.id} movie={movie} />
                     ))}

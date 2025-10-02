@@ -22,7 +22,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         >
             <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
             alt={`${movie.title} 영화의 이미지`}
-              />
+             className='w-full h-full object-cover block' />
 
             {isHovered && (
                 <div className='absolute inset-0 bg-gradient-to-t from-black/50 
