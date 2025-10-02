@@ -28,7 +28,7 @@ export default function MovieCard ({movie}: MovieCardProps) {
             <div className='absolute inset-0 bg-gradient-to-t from-black/50 
             to-transparent backdrop-blur-md flex flex-col justify-center     
             p-4 text-white'>
-                <h2 className='text-lg font-bold leading-sung'>{movie.title}</h2>
+                <h2 className='text-lg font-bold leading-snug'>{movie.title}</h2>
                 <p className='text-sm text-gray-300 leading-relaxed mt-2 line-clamp-5'>{movie.overview}</p>
             </div>
         )}
