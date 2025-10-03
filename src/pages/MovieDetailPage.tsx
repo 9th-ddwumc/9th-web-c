@@ -4,6 +4,11 @@ import axios from 'axios';
 import { LoadingSpinner } from '../components/LoadingSpinnier';
 import type { MovieDetail, Credits } from '../types/movieDetail';
 
+const API_BASE_URL = 'https://api.themoviedb.org/3';
+const API_HEADERS = {
+  Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
+};
+
 export default function MovieDetailPage() {
   const { movieId } = useParams<{ movieId: string }>();
   const navigate = useNavigate();
@@ -16,24 +21,16 @@ export default function MovieDetailPage() {
     const fetchMovieDetail = async (): Promise<void> => {
       setIsPending(true);
       try {
-        const [movieResponse, creditsResponse] = await Promise.all([
-          axios.get<MovieDetail>(
-            `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`,
-            {
-              headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-              },
-            }
-          ),
-          axios.get<Credits>(
-            `https://api.themoviedb.org/3/movie/${movieId}/credits?language=ko-KR`,
-            {
-              headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-              },
-            }
-          ),
-        ]);
+            const [movieResponse, creditsResponse] = await Promise.all([
+              axios.get<MovieDetail>(
+                `${API_BASE_URL}/movie/${movieId}?language=ko-KR`,
+                { headers: API_HEADERS }
+              ),
+              axios.get<Credits>(
+                `${API_BASE_URL}/movie/${movieId}/credits?language=ko-KR`,
+                { headers: API_HEADERS }
+              ),
+            ]);
         setMovie(movieResponse.data);
         setCredits(creditsResponse.data);
       } catch {
