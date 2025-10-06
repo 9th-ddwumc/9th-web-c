@@ -1,7 +1,9 @@
 import { validateSignin, type UserSigninInformation } from '../utils/validate';
 import useForm from '../hooks/useForm';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const {values, errors, touched, getInputProps} = useForm<UserSigninInformation>({
     initialValue: {
       email: "",
@@ -19,13 +21,23 @@ const LoginPage = () => {
     Object.values(values).some((value: string) => value === "");
 
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-4">
+    <div className="flex flex-col items-center justify-center h-full gap-4 -mt-30">
+      <div className="flex items-center justify-center w-[300px] relative mb-6">
+        <button 
+          type="button"
+          onClick={() => navigate(-1)}
+          className="absolute left-0 text-gray-600 hover:text-gray-900 transition-colors text-lg font-semibold"
+        >
+          &lt;
+        </button>
+        <span className='font-semibold text-lg'>로그인</span>
+      </div>
       <div className="flex flex-col gap-3">
       <input
         {...getInputProps("email")}
         name="email"
         type="email"
-        placeholder="이메일"
+        placeholder="이메일을 입력해주세요."
         className={`border w-[300px] p-[10px] rounded-sm focus:border-[#807bff] ${
           errors?.email && touched?.email ? "border-red-500 bg-red-200" : "border-gray-300"
         }`}
@@ -36,7 +48,7 @@ const LoginPage = () => {
         <input
           {...getInputProps("password")}
           type="password"
-          placeholder="비밀번호"
+          placeholder="비밀번호를 입력해주세요."
           className={`border w-[300px] p-[10px] rounded-sm focus:border-[#807bff] ${
             errors?.password && touched?.password ? "border-red-500 bg-red-200" : "border-gray-300"
           }`}
