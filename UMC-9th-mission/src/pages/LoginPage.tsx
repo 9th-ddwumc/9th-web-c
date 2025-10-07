@@ -1,9 +1,12 @@
-import { useState } from "react";
 import { validateSignin, type UserSigninInformation } from "../utils/validate";
 import useForm from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
+import { postSignin } from "../apis/auth";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { LOCALSTORAGE_KEY } from "../constants/key";
 
 const LoginPage = () => {
+    const {setItem} = useLocalStorage(LOCALSTORAGE_KEY.accessToken);
     const { values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
         initialValues: {
             email: "",
@@ -14,8 +17,14 @@ const LoginPage = () => {
 
 
 
-    const handleSubmimt = () => {
+    const handleSubmimt = async() => {
         console.log(values);
+        try{
+            const response = await postSignin(values);
+            setItem(response.data.accessToken);
+        } catch (error) {
+            alert(error?.message);
+        }
     }
 
     //오류가 하나라도 있거나 입력값 비어있으면 활성화
