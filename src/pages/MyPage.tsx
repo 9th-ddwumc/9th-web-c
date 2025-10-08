@@ -16,9 +16,9 @@ export const MyPage = () => {
     getData();
   }, []);
   
-  if (!data) return <div>로딩 중...</div>;
+  if (!data) return <div className='text-white'>로딩 중...</div>;
   
-  return <div>{data.data.name} 님 반갑습니다.</div>;
+  return <div className='text-white'>{data.data.name} 님 반갑습니다.</div>;
 };
 
 export default MyPage;

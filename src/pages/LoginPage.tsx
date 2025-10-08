@@ -40,11 +40,11 @@ const handleSubmit = async () => {
         <button 
           type="button"
           onClick={() => navigate(-1)}
-          className="absolute left-0 text-gray-600 hover:text-gray-900 transition-colors text-lg font-semibold"
+          className="absolute left-0 hover:text-gray-300 transition-colors text-lg text-white font-semibold"
         >
           &lt;
         </button>
-        <span className='font-semibold text-lg'>로그인</span>
+        <span className='font-semibold text-lg text-white'>로그인</span>
       </div>
       <div className="flex flex-col gap-3">
       <input
@@ -52,7 +52,7 @@ const handleSubmit = async () => {
         name="email"
         type="email"
         placeholder="이메일을 입력해 주세요."
-        className={`border w-[300px] p-[10px] rounded-sm focus:border-[#807bff] ${
+        className={`text-white placeholder-white border w-[300px] p-[10px] rounded-sm focus:border-[#807bff] ${
           errors?.email && touched?.email ? "border-red-500 bg-red-200" : "border-gray-300"
         }`}
       />
@@ -63,7 +63,7 @@ const handleSubmit = async () => {
           {...getInputProps("password")}
           type="password"
           placeholder="비밀번호를 입력해 주세요."
-          className={`border w-[300px] p-[10px] rounded-sm focus:border-[#807bff] ${
+          className={`border w-[300px] p-[10px] rounded-sm focus:border-[#807bff] text-white placeholder-white ${
             errors?.password && touched?.password ? "border-red-500 bg-red-200" : "border-gray-300"
           }`}
         />
@@ -73,8 +73,8 @@ const handleSubmit = async () => {
         <button type='button'
         onClick={handleSubmit}
         disabled={isDiabled}
-        className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium
-        hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300">로그인</button>
+        className="w-full bg-pink-600 text-white py-3 rounded-md text-lg font-medium
+        hover:bg-pink-700 transition-colors cursor-pointer disabled:bg-gray-300">로그인</button>
       </div>
     </div>
   )

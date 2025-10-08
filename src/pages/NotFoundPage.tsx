@@ -1,7 +1,7 @@
 const NotFoundPage = () => {
   return (
     <div>
-      NotFoundPage
+      다른 길로 오셨습니다...
     </div>
   )
 }

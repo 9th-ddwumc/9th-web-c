@@ -73,19 +73,19 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-4 -mt-30">
-      <div className="flex items-center justify-center w-[300px] relative mb-6">
+    <div className='flex flex-col items-center justify-center h-full gap-4 -mt-30'>
+      <div className='flex items-center justify-center w-[300px] relative mb-6'>
         <button
           type="button"
           onClick={() => (step === 1 ? navigate(-1) : setStep(step - 1))}
-          className="absolute left-0 text-gray-600 hover:text-gray-900 transition-colors text-lg font-semibold"
+          className='absolute left-0 text-white hover:text-gray-300 transition-colors text-lg font-semibold'
         >
           &lt;
         </button>
-        <span className="font-semibold text-lg">회원가입</span>
+        <span className='font-semibold text-lg text-white'>회원가입</span>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className='flex flex-col gap-3'>
         {/* 1단계: 이메일 */}
         {step === 1 && (
           <>
@@ -95,8 +95,8 @@ const SignupPage = () => {
               type="button"
               onClick={() => setStep(2)}
               disabled={isStep1Disabled}
-              className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium
-              hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
+              className='w-full bg-pink-600 text-white py-3 rounded-md text-lg font-medium
+              hover:bg-pink-700 transition-colors cursor-pointer disabled:bg-gray-300'
             >
               다음
             </button>
@@ -106,7 +106,7 @@ const SignupPage = () => {
         {/* 2단계: 비밀번호 */}
         {step === 2 && (
           <>
-            <div className="w-[300px] mb-2 text-sm text-gray-600">
+            <div className='w-[300px] mb-2 text-sm text-white'>
               📧 {values.email}
             </div>
 
@@ -126,8 +126,8 @@ const SignupPage = () => {
               type="button"
               onClick={() => setStep(3)}
               disabled={isStep2Disabled}
-              className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium
-              hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
+              className='w-full bg-pink-600 text-white py-3 rounded-md text-lg font-medium
+              hover:bg-pink-700 transition-colors cursor-pointer disabled:bg-gray-300'
             >
               다음
             </button>
@@ -143,8 +143,8 @@ const SignupPage = () => {
               type="button"
               onClick={handleSubmit(onSubmit)}
               disabled={isStep3Disabled || isSubmitting}
-              className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium
-              hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
+              className='w-full bg-pink-600 text-white py-3 rounded-md text-lg font-medium
+              hover:bg-pink-700 transition-colors cursor-pointer disabled:bg-gray-300'
             >
               {isSubmitting ? "처리 중..." : "회원가입"}
             </button>
