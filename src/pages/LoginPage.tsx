@@ -1,10 +1,14 @@
 import { validateSignin, type UserSigninInformation } from '../utils/validate';
 import useForm from '../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
+import { postSignin } from '../apis/auth';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { LOCAL_STORAGE_KEY } from '../constants/key';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const {values, errors, touched, getInputProps} = useForm<UserSigninInformation>({
+  const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+  const { values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
     initialValue: {
       email: "",
       password: "",
@@ -12,9 +16,19 @@ const LoginPage = () => {
     validate: validateSignin,
   });
 
-  const handleSubmit = () => {
-    console.log("values:", values);
-  };
+const handleSubmit = async () => {
+  console.log(values);
+  try {
+    const response = await postSignin(values);
+    setItem(response.data.accessToken);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      alert(error.message);
+    } else {
+      alert("알 수 없는 오류가 발생했습니다.");
+    }
+  }
+};
 
   const isDiabled : boolean =
     Object.values(errors || {}).some((error: string) => error.length > 0) ||

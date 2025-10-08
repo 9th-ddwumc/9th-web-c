@@ -2,6 +2,7 @@ import {z} from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from 'react-router-dom';
+import { postSignup } from "../apis/auth";
 
 const schema = z.object({
   email: z
@@ -40,9 +41,10 @@ const SignupPage = () => {
     mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
     const { passwordCheck, ...rest } = data;
-    console.log(rest);
+    const response = await postSignup(rest);
+    console.log(response);
   };
 
   return (
@@ -90,7 +92,7 @@ const SignupPage = () => {
 
         <input
           {...register("name")}
-          type="password"
+          type="name"
           placeholder="이름을 입력해 주세요."
           className={`border w-[300px] p-[10px] rounded-sm focus:border-[#807bff] ${
             errors?.name ? 'border-red-500 bg-red-200' : 'border-gray-300'
@@ -105,7 +107,7 @@ const SignupPage = () => {
           className='w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium
           hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300'
         >
-          로그인
+          회원가입
         </button>
       </div>
     </div>
