@@ -17,7 +17,7 @@ const LoginPage = () => {
 
 
 
-    const handleSubmimt = async() => {
+    const handleSubmit = async() => {
         console.log(values);
         try{
             const response = await postSignin(values);
@@ -56,7 +56,7 @@ const LoginPage = () => {
                 className={`border border-[#ccc] w-[300px] p-[10px] focus:border-[#807bff] rounded-sm
                 ${errors?.password && touched?.password ? "border-[#ed2463] bg-[#e39db3]" : "border-gray-300"}`} />
                 {errors?.password && touched?.password && (<div className="text-[#ed2463] text-sm">{errors.password}</div>)}
-                <button type='button' onClick={handleSubmimt} disabled={isDisabled}
+                <button type='button' onClick={handleSubmit} disabled={isDisabled}
                 className ='w-full bg-[#ed2463] text-white py-3 rounded-md text-lg font-medium hover:bg-[#e31456]
                 transition-colors cursor-pointer disabled:bg-[#1f1f1f]'>로그인</button>
             </div>
