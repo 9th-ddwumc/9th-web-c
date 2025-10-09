@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import { validateSignin, type UserSigninInformation } from "../utils/validate";
+import { postSignin } from "../apis/auth";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { LOCAL_STRAGE_KEY } from "../constants/key";
 
 const LoginPage = () => {
+    const {setItem} = useLocalStorage(LOCAL_STRAGE_KEY.accessToken)
     const navigate = useNavigate();
 
     const {values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
@@ -13,8 +17,14 @@ const LoginPage = () => {
         validate: validateSignin,
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         console.log(values);
+        try{
+            const response = await postSignin(values);
+            setItem(response.data.accessToken);
+        }catch(error){
+            alert("예기치 못한 오류가 발생했습니다.");
+        }
     };
 
 
@@ -51,7 +61,7 @@ const LoginPage = () => {
                 {...getInputProps("password")}
                 className={`border border-[#ccc] w-[300px] p-[10px] focus:border-[#807bff] rounded-sm 
                     ${errors?.password &&touched?.password ? "border-red-500 bg-red-200": "border-gray-300"}`}
-                type={`password`}
+                type={`passward`}
                 placeholder={"비밀번호"}
             />
              {errors?.password && touched?.password &&(

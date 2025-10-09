@@ -5,6 +5,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import HomeLayout from "./layouts/HomeLayout";
 import SignupPage from "./pages/SignupPage";
+import MyPage from "./pages/MyPage";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ const router = createBrowserRouter([
     children:[
       {index: true, element:<HomePage/>},// path:"/", 대신에 index: true, 사용
       {path: 'login', element: <LoginPage/>},
-      {path: 'signup', element: <SignupPage/>}
+      {path: 'signup', element: <SignupPage/>},
+      {path: 'my', element: <MyPage/>},
     ]
   }
 ])
