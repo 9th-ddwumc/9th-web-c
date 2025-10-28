@@ -8,9 +8,9 @@ export default function useCustomFetch<T>(url: string, config?: AxiosRequestConf
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    let isCancelled = false;
+    let isCancelled = false; //컴포넌트 언마운트 시 상태 업데이트 방지용
 
-    const fetchData = async () => {
+    const fetchData = async () => { //실제 네트워크 호출 로직
       setIsLoading(true);
       setIsError(false);
 
@@ -26,7 +26,7 @@ export default function useCustomFetch<T>(url: string, config?: AxiosRequestConf
 
     fetchData();
 
-    return () => {
+    return () => { //언마운트 시 isCancelled = true 로 플래그 변경
       isCancelled = true;
     };
   }, [url, ...(deps || [])]);

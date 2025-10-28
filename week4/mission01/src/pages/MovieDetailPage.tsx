@@ -8,14 +8,14 @@ export default function MovieDetailPage () {
      const { movieId } = useParams<{ movieId: string }>();
 
   const { data: movie, isLoading: movieLoading, isError: movieError } =
-    useCustomFetch<MovieDetails>(
-      `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
+    useCustomFetch<MovieDetails>( //영화 상세 정보(MovieDetails)를 가져옴. movie, movieLoading, movieError로 이름을 바꿔서 받음.
+      `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, //요청 URL에 movieId 삽입, language=en-US 포함.
       { headers: { Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}` } },
       [movieId]
     );
 
   const { data: credits, isLoading: creditsLoading, isError: creditsError } =
-    useCustomFetch<MovieCredits>(
+    useCustomFetch<MovieCredits>( //useCustomFetch — 해당 영화의 크레딧(출연진/제작진)을 가져옴. credits, creditsLoading, creditsError.
       `https://api.themoviedb.org/3/movie/${movieId}/credits`,
       { headers: { Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}` } },
       [movieId]
