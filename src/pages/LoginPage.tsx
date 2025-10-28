@@ -2,10 +2,18 @@ import { validateSignin, type UserSigninInformation } from '../utils/validate';
 import useForm from '../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useEffect } from 'react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, accessToken } = useAuth();
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [navigate, accessToken]);
+
   const { values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
     initialValue: {
       email: "",
@@ -16,7 +24,6 @@ const LoginPage = () => {
 
 const handleSubmit = async () => {
   await login(values);
-  navigate("/mypage");
 };
 
   const isDiabled : boolean =
