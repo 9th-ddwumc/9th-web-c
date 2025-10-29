@@ -11,7 +11,7 @@ const NameInput = ({ register, error }: NameInputProps) => {
       <div className="flex justify-center mb-4">
         <img
           src="/profile.png"
-          alt="프로필"
+          alt="profile image"
           className='w-24 h-24 rounded-full object-cover'
         />
       </div>

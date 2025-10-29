@@ -26,6 +26,10 @@ const handleSubmit = async () => {
   await login(values);
 };
 
+const handleGoogleLogin = () => {
+  window.location.href = import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login";
+}
+
   const isDiabled : boolean =
     Object.values(errors || {}).some((error: string) => error.length > 0) ||
     Object.values(values).some((value: string) => value === "");
@@ -67,10 +71,23 @@ const handleSubmit = async () => {
           <div className="text-red-500 text-sm">{errors.password}</div>
         )}
         <button type='button'
-        onClick={handleSubmit}
-        disabled={isDiabled}
-        className="w-full bg-pink-600 text-white py-3 rounded-md text-lg font-medium
-        hover:bg-pink-700 transition-colors cursor-pointer disabled:bg-gray-300">로그인</button>
+          onClick={handleSubmit}
+          disabled={isDiabled}
+          className="w-full bg-pink-600 text-white py-3 rounded-md text-lg font-medium
+          hover:bg-pink-700 transition-colors cursor-pointer disabled:bg-gray-300"
+        >
+          로그인
+        </button>
+        <button type='button'
+          onClick={handleGoogleLogin}
+          className="w-full bg-pink-600 text-white py-3 rounded-md text-lg font-medium
+          hover:bg-pink-700 transition-colors cursor-pointer disabled:bg-gray-300"
+        >
+          <div className="flex items-center justify-center gap-2">
+            <img src={"/google.png"} alt="Google Logo Image" className='w-5 h-5'/>
+            <span>구글 로그인</span>
+          </div>
+        </button>
       </div>
     </div>
   )
