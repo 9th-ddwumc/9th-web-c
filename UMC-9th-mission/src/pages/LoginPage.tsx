@@ -33,6 +33,10 @@ const LoginPage = () => {
         navigate("/"); 
     };
 
+    const handleGoogleLogin = () => {
+        window.location.href = 
+        import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login";
+    };
     //버튼 비활성화 조건
     const isDisabled = 
         //errors 객체의 값 중 하나라도 길이가 있으면(에러 존재) true
@@ -77,8 +81,20 @@ const LoginPage = () => {
                 type="button" 
                 onClick={handleSubmit} 
                 disabled={isDisabled} 
-                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300">
+                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
+                >
                     로그인
+            </button>
+             <button 
+                type="button" 
+                onClick={handleGoogleLogin} 
+                //disabled={isDisabled} 
+                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
+                >
+                    <div className="flex items-center justify-center gap-4">
+                        <img src = {"/Google_Favicon_2025.svg"} alt="Google Logo Image" className="w-10 h-10"/>
+                        <span>구글 로그인</span>
+                    </div>
             </button>
         </div>
     </div>

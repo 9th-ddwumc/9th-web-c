@@ -13,6 +13,7 @@ let refreshPromise:Promise<string>|null = null;
 
 export const axiosInstance =axios.create({
     baseURL: import.meta.env.VITE_SERVER_API_URL,
+    //withCredentials:true, 구글로그인을 토큰방식이 아니라 쿠키로했을때 꼭해야함
     // headers: { //JWT방식
     //         Authorization: `Bearer ${localStorage.getItem(LOCAL_STRAGE_KEY.accessToken)}`,
     //     },
