@@ -1,9 +1,7 @@
-import { json, set } from "zod";
-
 export const useLocalStorage = (key: string) => {
-    const setItem = (value: unknown) => {
+    const setItem = (value: string) => {  // value 타입을 string으로 제한
         try {
-            window.localStorage.setItem(key, JSON.stringify(value));
+            window.localStorage.setItem(key, value); // JSON.stringify 제거
         } catch (error) {
             console.log(error);
         }
@@ -12,8 +10,7 @@ export const useLocalStorage = (key: string) => {
     const getItem = () => {
         try {
             const item = window.localStorage.getItem(key);
-
-            return item? JSON.parse(item) : null;
+            return item ?? null; // 그대로 반환, JSON.parse 제거
         } catch (e) {
             console.log(e);
         }
@@ -28,5 +25,4 @@ export const useLocalStorage = (key: string) => {
     }
 
     return {setItem, getItem, removeItem};
-        
 }

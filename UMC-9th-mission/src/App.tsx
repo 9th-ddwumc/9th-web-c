@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
@@ -9,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import HomeLayout from './layouts/HomeLayout';
 import SignupPage from './pages/SignupPage';
 import { MyPage } from './pages/MyPage';
+import { AuthProvider } from './context/AuthContext';
 
 const router = createBrowserRouter([
   {
@@ -27,9 +25,9 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   )
 }
 

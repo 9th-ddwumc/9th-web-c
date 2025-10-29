@@ -1,15 +1,18 @@
 import axios from "axios";
 import { LOCALSTORAGE_KEY } from "../constants/key";
 
+// 기본 서버 주소 설정
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API_URL,
 });
 
-// 요청 인터셉터
+// 토큰을 자동으로 헤더에 포함
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken"); // 요청 시점에 읽음
+  const token = localStorage.getItem(LOCALSTORAGE_KEY.accessToken);
+
   if (token) {
-    config.headers.Authorization = `Bearer ${localStorage.getItem(LOCALSTORAGE_KEY.accessToken)}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });

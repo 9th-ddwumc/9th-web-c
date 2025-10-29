@@ -1,12 +1,19 @@
 import { validateSignin, type UserSigninInformation } from "../utils/validate";
 import useForm from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
-import { postSignin } from "../apis/auth";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCALSTORAGE_KEY } from "../constants/key";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
 
 const LoginPage = () => {
-    const {setItem} = useLocalStorage(LOCALSTORAGE_KEY.accessToken);
+    const {login, accessToken} = useAuth();
+    const navigate = useNavigate();
+
+     useEffect(() => {
+        if (accessToken) {
+            navigate("/");
+        }
+    }, [accessToken, navigate]);
+    
     const { values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
         initialValues: {
             email: "",
@@ -18,12 +25,11 @@ const LoginPage = () => {
 
 
     const handleSubmit = async() => {
-        console.log(values);
         try{
-            const response = await postSignin(values);
-            setItem(response.data.accessToken);
-        } catch (error) {
-            alert(error?.message);
+            await login(values);
+            navigate("/my");
+        } catch {
+            alert("로그인에 실패했습니다. 다시 시도해주세요.");
         }
     }
 
@@ -31,7 +37,6 @@ const LoginPage = () => {
     const isDisabled = Object.values(errors || {}).some((error) => error.length > 0) ||
     Object.values(values).some((value) => value === '');
 
-    const navigate = useNavigate();
     return (
         <div className="flex flex-col items-center justify-center h-full gap-4">
             <div className='flex flex-col gap-3'>

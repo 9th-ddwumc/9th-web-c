@@ -19,7 +19,8 @@ const PasswordInput = ({ register, name, error }: any) => {
           className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
           onClick={() => setShowPassword(!showPassword)}
         >
-          {showPassword ? <AiFillEyeInvisible size={20} /> : <AiFillEye size={20} />}
+          {showPassword ? <AiFillEye size={20} /> : <AiFillEyeInvisible size={20} />}
+
         </span>
       </div>
       {/* 에러 메시지는 input 밖에 별도로 */}
