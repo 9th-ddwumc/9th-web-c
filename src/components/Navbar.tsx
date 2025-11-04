@@ -9,7 +9,7 @@ export const Navbar = () => {
     <nav className='flex items-center justify-between px-6 py-4 border-b bg-[#171717]'>
       {/* 왼쪽: 홈 */}
       <Link to='/' className='flex items-center text-white text-xl font-bold'>
-        안녕하세요
+        Home
       </Link>
 
       {/* 오른쪽: 버튼 그룹 */}
