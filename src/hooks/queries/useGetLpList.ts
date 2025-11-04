@@ -2,18 +2,18 @@ import { useQuery } from "@tanstack/react-query"
 import type { PaginationDto } from "../../types/common";
 import { getLpList } from "../../apis/lp";
 import { QUERY_KEY } from "../../constants/key";
-import type { ResponseLpListDto } from "../../types/lp";
+// import type { ResponseLpListDto } from "../../types/lp";
 
-/* const initialLpListData: ResponseLpListDto = {
-  status: true,
-  statusCode: 200,
-  message: "",
-  data: {
-    data: []
-  },
-  nextCursor: 0,
-  hasNext: false,
-} */
+// const initialLpListData: ResponseLpListDto = {
+//   status: true,
+//   statusCode: 200,
+//   message: "",
+//   data: {
+//     data: []
+//   },
+//   nextCursor: 0,
+//   hasNext: false,
+// }
 
 function useGetLpList({ cursor, search, order, limit}: PaginationDto) {
   return useQuery({
