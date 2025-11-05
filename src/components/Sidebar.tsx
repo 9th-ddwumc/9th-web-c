@@ -11,7 +11,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       {/* 작은 화면 */}
       {isOpen && ( // 사이드바 열려있을 때만 렌더링
         <div 
-          className='fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden'
+          className='fixed inset-0 bg-black/50 z-30 md:hidden'
           onClick={onClose} // 외부 영역 클릭 시 사이드바 닫기
         />
       )}
