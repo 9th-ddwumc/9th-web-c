@@ -19,6 +19,9 @@ export const axiosInstance =axios.create({
     //     },
 });
 
+//axios(서버 요청 도구)를 한 번 감싸서,
+//요청할 때마다 자동으로 토큰 붙이고, 만약 토큰이 만료되면 자동으로 갱신(리프레시)해주는 부분
+// =>자동 로그인 유지 기능을 구현
 //요청 인터셉터:모든 요청 전에 accessToken을 Authorization 헤더에 추가한다.
 axiosInstance.interceptors.request.use((config) => {
     const{getItem} = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
@@ -37,7 +40,7 @@ axiosInstance.interceptors.request.use((config) => {
     (error) => Promise.reject(error),
 );
 
-    //응답 인터셉터:401에러 발생 -> refresh 토큰을 통한 토큰 갱신을 처리합니다.
+    //응답 인터셉터:401에러(토큰 만료) 발생 -> refresh 토큰을 통한 토큰 갱신을 처리합니다.
     axiosInstance.interceptors.response.use(
         (response) => response,//정상 응답 그대로 반환
         async(error) => {
@@ -112,7 +115,7 @@ axiosInstance.interceptors.request.use((config) => {
                 //진행중인 refreshPromise가 해결될때까지 기다림
                 return refreshPromise.then((newAccessToken) =>{
                     //원본 요청의 Authorization헤더를 갱신된 토큰으로 업뎃
-                    originalRequest.headers['Authoriztion'] =`Bearer ${newAccessToken}`; 
+                    originalRequest.headers["Authorization"] =`Bearer ${newAccessToken}`; 
 
                     //업데이트 된 원본 요청을 재시도 합니다.
                     return axiosInstance.request(originalRequest);

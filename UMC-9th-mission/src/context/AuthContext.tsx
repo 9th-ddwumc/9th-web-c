@@ -4,6 +4,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_KEY } from "../constants/key";
 import { postLogout, postSignin } from "../apis/auth";
 
+//컨텍스트 타입 정의 및 기본값
 interface AuthContextType{
     accessToken: string|null;
     refreshToken: string|null;
@@ -18,6 +19,7 @@ export const AuthContext = createContext<AuthContextType>({
     logout:async()=>{},
 });
 
+//로컬스토리지에서 초기 토큰 값을 불러와 상태로 초기화.
 export const AuthProvider=({children}:PropsWithChildren)=>{
     const{
         getItem:getAccessTokenFromStorage,
@@ -39,6 +41,7 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
 
     const login = async(signinData: RequestSigninDto)=> {
         try{
+            //postSignin 호출 후 토큰을 로컬스토리지와 상태에 저장.
             const {data} = await postSignin(signinData);
 
             if(data){
@@ -51,6 +54,7 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
                 setAccessToken(newAccessToken);
                 setRefreshToken(newRefreshToken);
                 alert("로그인 성공");
+                //로그인 성공 시 알림 후 window.location.href="/my"로 이동(전체 리로드).
                 window.location.href="/my";
             }
         }catch(error){
@@ -59,6 +63,7 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
         }
     };
 
+    //로그아웃: 서버 호출 후 로컬 스토리지와 상태를 정리.
     const logout = async() =>{
         try{
             await postLogout()
@@ -76,13 +81,14 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
         }
     }
     return(
+        //로그인 관련 데이터(accessToken, login, logout)를 앱 전체에서 쓸 수 있게 공유.
         <AuthContext.Provider value = {{accessToken, refreshToken, login, logout}}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-
+//컨텍스트에서 값 꺼내 쓰는 커스텀 훅(전역 로그인 정보 불러오는 함수)
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if(!context){

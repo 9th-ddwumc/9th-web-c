@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import { validateSignin, type UserSigninInformation } from "../utils/validate";
 import { useAuth } from "../context/AuthContext";
@@ -7,12 +7,15 @@ import { useEffect } from "react";
 const LoginPage = () => {
     const {login, accessToken} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+     // 로그인 전 사용자가 가려던 경로
+     const from = new URLSearchParams(location.search).get("from") || "/my"
 
     useEffect(() => {
-        if(accessToken){
-            navigate("/");
+        if (accessToken) {
+       navigate(from, { replace: true }); // 원래 가려던 페이지로 복귀
         }
-    },[navigate, accessToken]);
+    }, [navigate, accessToken, from]);
     
     //제네릭으로 UserSigninInformation 타입을 지정하고 반환값을 구조분해.
     const {values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
@@ -25,7 +28,8 @@ const LoginPage = () => {
 
     //로그인 버튼 클릭 시 호출
     const handleSubmit = async() => {
-        await login(values);
+        // 로그인 로직 (구글 로그인 버튼 클릭 시 실행)
+         await login(values); // 실제 구현된 로그인 함수 호출
     };
 
     //홈으로 이동하는 함수
@@ -33,9 +37,14 @@ const LoginPage = () => {
         navigate("/"); 
     };
 
+    // 구글 로그인
     const handleGoogleLogin = () => {
-        window.location.href = 
-        import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login";
+    const from = new URLSearchParams(location.search).get("from") || "/";
+    const redirectUrl =
+        import.meta.env.VITE_SERVER_API_URL +
+        `/v1/auth/google/login?from=${encodeURIComponent(from)}`;
+
+    window.location.href = redirectUrl;
     };
     //버튼 비활성화 조건
     const isDisabled = 
