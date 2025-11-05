@@ -12,7 +12,6 @@ const HomeLayout = () => {
     const handleResize = () => {
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
