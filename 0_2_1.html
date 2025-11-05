@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0주차 미션1</title>
+    <style>
+        header{
+            display: flex;
+             justify-content: center; 
+        }
+        nav{
+            width:100%;
+            display: flex; 
+            justify-content: center; 
+        }
+        body{
+             background-color: black;
+        }
+        .block{
+            width:300px;
+            height:50px;
+            list-style: none;
+            display: flex; 
+            justify-content: center; 
+            gap:30px;
+            border-radius: 20px;
+            position:relative;
+            z-index: 1;
+        }
+        .block::after{
+            content:"";
+            width:320px;
+            height:40px;
+            background-color: gray;
+            border-radius: 20px;
+            opacity:0.5;
+            position:absolute;
+            z-index: -1;
+            margin-top: 5px;
+        }
+        .block__element{
+            text-align: center;
+            margin-top:10px;
+            margin-top:10px; 
+        }
+        .block__element--choose{
+            color: white;
+            text-decoration: none; 
+             border-radius: 20px;
+        }
+        .block__element--choose:hover{
+            background-color: green;
+           
+        }
+        .block__element--choose:hover.active{
+            background-color: green !important;
+        }
+        .menu_hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="block">
+               <li class="block__element"><a href="" class="block__element--choose">main</a></li>   
+               <li class="block__element"><a href="" class="block__element--choose">Projects</a></li>            
+               <li class="block__element"><a href="" class="block__element--choose">Members</a></li>
+               <li class="block__element"><a href="" class="block__element--choose">FAQ</a></li>
+            </ul>
+        </nav>
+        <nav class="menu_hidden">
+            <ul>
+               <li>main</li>   
+               <li>Projects</li>            
+               <li>Members</li>
+               <li>FAQ</li>
+            </ul>
+        </nav>
+    </header>
+
+    <script>
+        const btns = document.querySelectorAll(".block__element--choose");
+        
+        btns.forEach(btn =>{
+        btns.addEventListener('click', () => { 
+         btns.classList.toggle('active'); 
+         this.classList.add("active");
+        })
+        });
+    </script>
+</body>
+</html>
