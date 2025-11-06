@@ -1,0 +1,37 @@
+body{
+    background-color: #adcee0;
+}
+.container{
+    text-align: center;
+    margin: 0 auto;
+}
+section{
+    display: inline-block;
+    width:500px;
+}
+h5{
+    font-style: bold;
+    text-decoration: underline;
+}
+input{
+    display: block;
+    outline-color: blue;
+    border-color: blue;
+    border-radius: 8px; 
+    background-color: white;
+    width: 500px;
+    height: 40px;
+    margin: 0 auto;
+}
+input:focus{
+    outline-color: blue;
+    border-color: blue;
+    border-radius: 8px;
+}
+.check_container{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    
+}
