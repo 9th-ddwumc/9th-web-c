@@ -2,6 +2,7 @@ import React from "react";
 
 interface LpListFallbackProps {
   type?: "loading" | "error";
+  message?: string;
 }
 
 /**

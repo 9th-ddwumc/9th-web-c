@@ -1,6 +1,6 @@
 import { axiosInstance } from "./axios";
 import type { PaginationDto } from "../types/common";
-import type { ResponseLpListDto } from "../types/lp";
+import type { ResponseLpDetailDto, ResponseLpListDto } from "../types/lp";
 
 
 export const getLpList = async (
@@ -11,7 +11,7 @@ export const getLpList = async (
   return data;
 };
 //  LP 상세 가져오기 
-export const fetchLpDetail = async (lpid: string): Promise<ResponseLpListDto> => {
+export const fetchLpDetail = async (lpid: string): Promise<ResponseLpDetailDto> => {
   const { data } = await axiosInstance.get(`/v1/lps/${lpid}`);
   return data;
 };

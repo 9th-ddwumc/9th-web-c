@@ -7,15 +7,23 @@ export type CommonReponse<T> = {
      data:T;
 };
 
-export type CusorBaseResponse<T> = {
-     status:boolean;
-     statusCode:number;
-     message:string;
+export type CursorBasedResponse<T> = CommonReponse<{
      data:T;
-     nextCursor:number;
+     nextCursor:number|null;
      hasNext:boolean;
-};
+}>;
 
+//위 타입2가지를 합친거
+// export type CusorBaseResponse<T> = {
+//      status:boolean;
+//      statusCode:number;
+//      message:string;
+//      data:{
+//           data:T;
+//           nextCursor:number;
+//           hasNext:boolean;
+//      }
+// };
 
 export type PaginationDto = {
      cursor?:number;
