@@ -2,6 +2,9 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../apis/axios';
 import type { Lp } from '../types/lp';
+import LoadingSpinner from '../components/common/LoadingSpinner';
+import ErrorMessage from '../components/common/ErrorMessage';
+import CommentSection from '../components/Comment/CommentSection';
 
 const LpDetailPage = () => {
   const { lpid } = useParams<{ lpid: string }>();
@@ -15,28 +18,9 @@ const LpDetailPage = () => {
     enabled: !!lpid,
   });
 
-  if (isPending) {
-    return (
-      <div className="p-8 flex items-center justify-center mt-40">
-        <div className="w-16 h-16 border-4 border-gray-700 border-t-pink-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="flex flex-col items-center justify-center mt-40">
-        <p className="text-white p-4">Error!</p>
-        <button
-          onClick={() => refetch()}
-          className="px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
-        >
-          다시 시도
-        </button>
-      </div>
-    );
-  }
-
+  if (isPending) return <LoadingSpinner />;
+  if (isError) return <ErrorMessage onRetry={refetch} />;
+  
   if (!data) return <div>데이터가 없습니다.</div>;
 
   return (
@@ -64,6 +48,8 @@ const LpDetailPage = () => {
           <span>{data.likes?.length || 0}</span>
         </div>
       <p className="mt-1">태그: {data.tags.map(tag => tag.name).join(', ')}</p>
+
+      <CommentSection lpId={Number(lpid)}/>
     </div>
   );
 };

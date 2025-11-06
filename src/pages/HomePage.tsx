@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../apis/axios";
 import { PAGINATION_ORDER } from "../enums/common";
 import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
 import useGetInfiniteLpList from "../hooks/queries/useGetInfiniteLpList";
+import ErrorMessage from "../components/common/ErrorMessage";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 const HomePage = () => {
-  const [searchInput, setSearchInput] = useState(""); // 입력 중인 값
-  const [search, setSearch] = useState(""); // 실제 쿼리에 적용될 값
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [order, setOrder] = useState<PAGINATION_ORDER>(PAGINATION_ORDER.desc);
 
   const {
@@ -17,6 +17,7 @@ const HomePage = () => {
     isFetching,
     isPending,
     isError,
+    refetch,
     hasNextPage,
     fetchNextPage,
   } = useGetInfiniteLpList(10, search, order);
@@ -34,33 +35,13 @@ const HomePage = () => {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSearch(searchInput);
-  };
-
-  if (isPending) {
-    return (
-      <div className="p-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-20">
-          <LpCardSkeletonList count={10} />
-        </div>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="flex flex-col items-center justify-center mt-40">
-        <p className="text-white p-4">Error!</p>
-      </div>
-    );
-  }
+  if (isPending) return <LoadingSpinner />;
+  if (isError) return <ErrorMessage onRetry={refetch} />;
 
   return (
     <div className="p-8">
       <div className="mt-5 mb-6 flex justify-between items-center gap-4">
-        <form onSubmit={handleSearchSubmit}>
+        <form>
           <input
             value={searchInput}
             placeholder="LP 검색..."

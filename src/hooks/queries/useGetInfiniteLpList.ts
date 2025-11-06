@@ -1,10 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { PAGINATION_ORDER } from "../../enums/common";
 import { axiosInstance } from "../../apis/axios";
+import { QUERY_KEY } from "../../constants/key";
 
 function useGetInfiniteLpList(limit: number, search: string, order: PAGINATION_ORDER) {
   return useInfiniteQuery({
-    queryKey: ["lps", search, order],
+    queryKey: [QUERY_KEY.lps, search, order],
     queryFn: async ({ pageParam = 0 }) => {
       const response = await axiosInstance.get("/v1/lps", {
         params: {
