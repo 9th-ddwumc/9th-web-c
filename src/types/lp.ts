@@ -11,23 +11,32 @@ export type Likes = {
   lpId: number;
 };
 
-export type Lp = {
-  id: number;
-  title: string;
-  content: string;
-  thumbnail: string;
-  published: boolean;
-  authorId: number;
-  createdAt: Date;
-  updatedAt: Date;
-  tags: Tag[];
-  likes: Likes[];
-};
-
 export type ResponseLpListDto = CursorBasedResponse<{
-  data: Lp[];
+  data: {
+    id: number;
+    title: string;
+    content: string;
+    thumbnail: string;
+    published: boolean;
+    authorId: number;
+    createdAt: Date;
+    updatedAt: Date;
+    tags: Tag[];
+    likes: Likes[];
+  }[];
 }>;
 
-export type ResponseLpDetailDto = {
-  data: Lp;
+export type Lp = {
+  data: {
+    id: number;
+    title: string;
+    content: string;
+    thumbnail: string;
+    published: boolean;
+    authorId: number;
+    createdAt: Date;
+    updatedAt: Date;
+    tags: Tag[];
+    likes: Likes[];
+  };
 };

@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       {/* 사이드바 */}
       <aside className={`
         fixed md:static
-        top-16 md:top-0
+        top-16 md:top-16
         left-0 bottom-0
         w-48
         bg-black border-r border-gray-800

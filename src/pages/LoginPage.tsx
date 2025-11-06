@@ -1,18 +1,24 @@
 import { validateSignin, type UserSigninInformation } from '../utils/validate';
 import useForm from '../hooks/useForm';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useEffect } from 'react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, accessToken } = useAuth();
+
+  const from = location.state?.from || "/";
+  
+  console.log('from:', from); // 디버깅
 
   useEffect(() => {
     if (accessToken) {
-      navigate("/");
+      console.log('로그인 성공, 이동:', from); // 디버깅
+      navigate(from, { replace: true });
     }
-  }, [navigate, accessToken]);
+  }, [accessToken, navigate]);
 
   const { values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
     initialValue: {
