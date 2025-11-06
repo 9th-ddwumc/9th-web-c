@@ -34,17 +34,17 @@ function CommentSection({ lpId }: CommentSectionProps) {
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   return (
-    <div className="mt-8 border-t border-gray-700 pt-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-white">댓글</h2>
+    <div className='mt-8 border-t border-gray-700 pt-6'>
+      <div className='flex items-center justify-between mb-4'>
+        <h2 className='text-xl font-bold text-white'>댓글</h2>
 
         <div className="flex gap-3">
           <button
             onClick={() => setOrder(PAGINATION_ORDER.asc)}
             className={`px-4 py-1.5 rounded-full font-medium transition-colors ${
               order === PAGINATION_ORDER.asc
-                ? "bg-white text-black"
-                : "bg-transparent text-white border border-gray-700 hover:border-gray-500"
+                ? 'bg-white text-black'
+                : 'bg-transparent text-white border border-gray-700 hover:border-gray-500'
             }`}
           >
             오래된순
@@ -53,8 +53,8 @@ function CommentSection({ lpId }: CommentSectionProps) {
             onClick={() => setOrder(PAGINATION_ORDER.desc)}
             className={`px-4 py-1.5 rounded-full font-medium transition-colors ${
               order === PAGINATION_ORDER.desc
-                ? "bg-white text-black"
-                : "bg-transparent text-white border border-gray-700 hover:border-gray-500"
+                ? 'bg-white text-black'
+                : 'bg-transparent text-white border border-gray-700 hover:border-gray-500'
             }`}
           >
             최신순
@@ -62,14 +62,14 @@ function CommentSection({ lpId }: CommentSectionProps) {
         </div>
       </div>
 
-      <div className="flex gap-2 mt-4">
+      <div className='flex gap-2 mt-4'>
         <input
-          type="text"
-          placeholder="댓글을 입력하세요..."
-          className="flex-1 px-3 py-2 rounded-lg border border-gray-600 text-white"
+          type='text'
+          placeholder='댓글을 입력하세요...'
+          className='flex-1 px-3 py-2 rounded-lg border border-gray-600 text-white'
         />
         <button
-          className="px-4 py-2 rounded-lg bg-gray-600 text-white font-medium hover:bg-pink-600 transition-colors"
+          className='px-4 py-2 rounded-lg bg-gray-600 text-white font-medium hover:bg-pink-600 transition-colors'
         >
           작성
         </button>
@@ -80,21 +80,10 @@ function CommentSection({ lpId }: CommentSectionProps) {
           ?.map((page) => page.data)
           ?.flat()
           ?.map((comment) => (
-            <div
-              key={comment.id}
-              className="p-4 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition-colors"
-            >
-              <p className="text-xs text-pink-400 font-semibold mb-1">
-                {comment.author?.name ?? "Unknown"} (ID: {comment.id})
-              </p>
-              <p className="text-white text-base">{comment.content}</p>
-              <p className="text-right text-xs text-gray-500 mt-2">
-                {new Date(comment.createdAt).toLocaleString()}
-              </p>
-            </div>
+            <CommentItem key={comment.id} comment={comment} />
           ))}
 
-          {isFetching && Array.from({ length: 3 }).map((_, i) => <CommentSkeleton key={i} />)}
+        {isFetching && Array.from({ length: 3 }).map((_, i) => <CommentSkeleton key={i} />)}
       </div>
 
       <div ref={ref} className="h-10" />
