@@ -4,9 +4,9 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { postSignup } from "../apis/auth";
-import EmailInput from "../components/EmailInput";
-import PasswordInput from "../components/PasswordInput";
-import NameInput from "../components/NameInput";
+import EmailInput from "../components/Inputs/EmailInput";
+import PasswordInput from "../components/Inputs/PasswordInput";
+import NameInput from "../components/Inputs/NameInput";
 
 const schema = z
   .object({
