@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>navbar</title>
+</head>
+<style>
+    
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .navbar{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(126, 126, 126, 0.656);
+        border-radius: 30px;
+        padding: 10px;
+        width: 350px;
+        height: 40px;
+        
+    }
+    .navbar__btn{
+        font-size: 13px;
+        margin-left: 10px;;
+        color: rgb(255, 255, 255);
+        padding-left: 18px;
+        padding-right: 18px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 30px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .navbar__btn:hover{
+        color: rgb(212, 212, 212);
+    }
+    .sidebar{
+        background-color: rgba(201, 201, 201, 0.656);
+        height: 100%;
+        display:none;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        cursor: pointer;
+        padding-top: 50px;
+    }
+    .sidebar__bar{
+        position: fixed;
+        top: 15px;
+        right: 15px;
+    }
+    .sidebar__menuitem{
+        display: block;
+        color: black;
+        padding: 10px;
+
+        margin-top: 5px;
+        border-radius: 10px;
+        margin-left: 10px;
+        margin-right: 150px;
+        text-decoration: none;
+        font-size: 30px;
+        font-weight: bold;
+
+        transition: transform 0.3s ease-out 0.2s;
+    }
+    .sidebar__menuitem:hover{
+        transform: scale(0.9);
+        
+
+    }
+    .sidebar__cancel{
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+    }
+    @media (max-width: 600px) {
+        .navbar {
+            display:none;
+        }
+        .sidebar{
+            display:block;
+        }
+    }
+</style>
+<body>
+    <nav class = "navbar">
+        <a href="home.html" class = "navbar__btn">Home</a>
+        <a href="projects.html" class = "navbar__btn">Projects</a>
+        <a href="members.html" class = "navbar__btn">Members</a>
+        <a href="faq.html" class = "navbar__btn">FAQ</a>
+    </nav>
+    
+    <div class="sidebar">
+        <img class="sidebar__bar" src="menu.png" />
+        <img class="sidebar__cancel" src="cancel.png" style="display:none;"/>
+        <div class="sidebar__menu" style="display:none;">
+            <a href="home.html" class = "sidebar__menuitem">Home</a>
+            <a href="projects.html" class = "sidebar__menuitem">Projects</a>
+            <a href="members.html" class = "sidebar__menuitem">Members</a>
+            <a href="faq.html" class = "sidebar__menuitem">FAQ</a>
+        </div>
+    </div>
+
+    <script>
+    const currentPage = window.location.pathname.split("/").pop(); // 현재 페이지 파일명
+    const btns = document.querySelectorAll('.navbar__btn');
+
+    btns.forEach(btn => {
+        if (btn.getAttribute("href") === currentPage) {
+            btn.style.backgroundColor = 'green';
+            btn.style.fontWeight = 'bold';
+        } else {
+            btn.style.backgroundColor = 'transparent';
+        }
+    });
+
+    const sidebarbar = document.querySelector('.sidebar__bar');
+    const sidebarMenu = document.querySelector('.sidebar__menu');
+    const sidebarMenuItems = document.querySelectorAll('.sidebar__menuitem');
+    const sidebarCancel = document.querySelector('.sidebar__cancel');
+
+
+    sidebarMenuItems.forEach(item => {
+        if (item.getAttribute("href") === currentPage) {
+            item.style.color = 'green';
+        } else {
+            item.style.backgroundColor = 'transparent';
+        }
+    });
+
+    sidebarbar.addEventListener('click', () => {
+            sidebarMenu.style.display = 'block';
+            sidebarbar.style.display = 'none';
+            document.querySelector('.sidebar__cancel').style.display = 'block';
+            localStorage.setItem('sidebarOpen', 'true');
+    });
+    sidebarCancel.addEventListener('click', () => {
+            sidebarMenu.style.display = 'none';
+            sidebarbar.style.display = 'block';
+            document.querySelector('.sidebar__cancel').style.display = 'none';
+            localStorage.setItem('sidebarOpen', 'false');
+        
+    });
+    window.addEventListener('load', () => {
+        if (localStorage.getItem("sidebarOpen") === "true") {
+        sidebarMenu.style.display = 'block';
+        sidebarbar.style.display = 'none';
+        sidebarCancel.style.display = 'block';
+    }
+    });
+</script>
+
+</body>
+</html>
