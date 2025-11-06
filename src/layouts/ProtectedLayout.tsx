@@ -20,10 +20,6 @@ const ProtectedLayout = () => {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(prev => !prev);
-  };
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) setIsSidebarOpen(false);
@@ -34,7 +30,7 @@ const ProtectedLayout = () => {
 
   return (
     <div className='h-dvh flex flex-col bg-black'>
-      <Navbar onMenuClick={toggleSidebar}/>
+      <Navbar onMenuClick={() => setIsSidebarOpen(true)}/>
       <div className='flex flex-1 overflow-hidden'>
         <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         <main className='flex-1 overflow-y-auto'>

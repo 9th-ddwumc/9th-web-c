@@ -10,12 +10,14 @@ const LoginPage = () => {
   const { login, accessToken } = useAuth();
 
   const from = location.state?.from || "/";
-  
-  console.log('from:', from); // 디버깅
+
+  useEffect(() => {
+    console.log('from:', from); // 디버깅
+  }, [from]);
 
   useEffect(() => {
     if (accessToken) {
-      console.log('로그인 성공, 이동:', from); // 디버깅
+      console.log(`로그인을 성공했습니다. ${from}으로 이동합니다.`); // 디버깅
       navigate(from, { replace: true });
     }
   }, [accessToken, navigate]);
