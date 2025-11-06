@@ -11,10 +11,12 @@ const ProtectedLayout = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!accessToken) {
-      alert("로그인이 필요한 서비스입니다.");
-    }
-  }, [accessToken]);
+    const handleResize = () => {
+      if (window.innerWidth < 768) setIsSidebarOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   if (!accessToken) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
