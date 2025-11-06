@@ -8,8 +8,8 @@ const LoginPage = () => {
     const {login, accessToken} = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-     // 로그인 전 사용자가 가려던 경로
-     const from = new URLSearchParams(location.search).get("from") || "/my"
+     // location.state (navigate의 state)에서 읽어옴
+    const from = location.state?.from || "/my"
 
     useEffect(() => {
         if (accessToken) {
@@ -39,7 +39,6 @@ const LoginPage = () => {
 
     // 구글 로그인
     const handleGoogleLogin = () => {
-    const from = new URLSearchParams(location.search).get("from") || "/";
     const redirectUrl =
         import.meta.env.VITE_SERVER_API_URL +
         `/v1/auth/google/login?from=${encodeURIComponent(from)}`;

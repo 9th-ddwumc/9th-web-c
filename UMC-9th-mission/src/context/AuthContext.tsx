@@ -55,7 +55,6 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
                 setRefreshToken(newRefreshToken);
                 alert("로그인 성공");
                 //로그인 성공 시 알림 후 window.location.href="/my"로 이동(전체 리로드).
-                window.location.href="/my";
             }
         }catch(error){
             console.error("로그인 오류", error);
