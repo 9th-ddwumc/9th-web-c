@@ -1,64 +1,73 @@
-# 9th-web-c
-[UMC DDWU 9th를 위한 깃허브 사용법 및 규칙](https://makeus-challenge.notion.site/26fb57f4596b80e78684e241677067b5)
+# React + TypeScript + Vite
 
-<br>
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🌱 Pull Requests Rule
+Currently, two official plugins are available:
 
-**Title**: :이모지: [WeekN_닉네임_미션번호] 
-	(ex. ✨ Week01_bbungya_01)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-**Reviewers(PR을 리뷰해 줄 팀원)**: 파트장으로 설정
+## React Compiler
 
-**Assignees(PR 담당자)**: 본인
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-**Labels**: 해당하는 기능 label 설정
+## Expanding the ESLint configuration
 
-<br/>
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 📚 <span id="git-컨벤션">git 컨벤션</span>
-### 브랜치 명명 규칙 
-- 브랜치 명: `weekN_닉네임` (ex. week01_bbungya)
-    - 만약 한 주차에 미션이 여러 개면 닉네임 뒤에 `_미션 번호` 를 붙입니다. (ex. week01_bbungya_01)
-    - 다음 주차로 이어지는 미션이라면 **저번주 브랜치에서 새 브랜치 생성**
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### 커밋 메세지 규칙 
-**Gitmoji 사용**
-  
-| **타입** | **설명** | **이모지** |
-| --- | --- | --- |
-| feat | 새로운 기능 추가 | ✨ |
-| fix | 버그 수정 | 🐛 |
-| docs | 문서 수정 (README, 주석 등) |  📝 |
-| style | 코드 스타일 변경 (포맷, 세미콜론 등) | 🎨 |
-| refactor | 리팩토링 (기능 변화 없음) | ♻️ |
-| test | 테스트 코드 추가 / 수정 | ✅ |
-| chore | 빌드 설정, 패키지 관리 등 기타 작업 | 🧽 |
-| perf | 성능 개선 | ⚡ |
-| ci | CI/CD 설정 변경 | 👷🏻 |
-| build | 빌드 관련 파일 수정 (예: Gradle) | 🌱 |
-| revert | 이전 커밋 되돌리기 | ⏪ |
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-### 커밋 메세지 형식 
-**type(scope): subject**
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-- `type` : 커밋의 종류
-- `scope (optional)` : 영향 받는 모듈 or 기능
-- `subject` : 커밋의 간단한 설명
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-feat(user): 회원 프로필 조회 API 추가 <br>
-fix(jwt): 토큰 만료 시간 오류 수정 <br>
-docs: 사용자 API 명세 추가<br>
-refactor(user): 로직 분리 및 유틸 메서드 추출<br>
-style: 코드 정렬 및 불필요한 공백 제거<br>
-test(user): 회원가입 테스트 케이스 추가<br>
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-<br>
-
-## 1. 자신의 브랜치에 프로젝트 업로드하기
-
-## 2. Main 브랜치로 PR(Pull Request) 날리기
-
-## 3. 스터디원 코드 리뷰해주기
-
-Copyright © Soyeon Lee (bbungya) All rights reserved.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
