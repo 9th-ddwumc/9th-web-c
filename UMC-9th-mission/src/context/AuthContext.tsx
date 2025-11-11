@@ -1,4 +1,4 @@
-import { createContext, useState, useContext,type PropsWithChildren } from "react";
+import { createContext, useState, useContext,type PropsWithChildren, useCallback } from "react";
 import type { RequestSigninDto } from "../types/auth";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_KEY } from "../constants/key";
@@ -8,8 +8,11 @@ import { postLogout, postSignin } from "../apis/auth";
 interface AuthContextType{
     accessToken: string|null;
     refreshToken: string|null;
-    login:(signInData:RequestSigninDto) => Promise<void>;
-    logout:() => Promise<void>;
+    // login:(signInData:RequestSigninDto) => Promise<void>;
+    // logout:() => Promise<void>;
+    //(API 호출 -> 토큰 저장)
+    login: (accessToken: string, refreshToken: string) => void;
+    logout: () => void; // API 호출은 Navbar에서 useMutation으로 처리
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -39,6 +42,7 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
         getRefreshTokenFromStorage()
     );
 
+    /*
     const login = async(signinData: RequestSigninDto)=> {
         try{
             //postSignin 호출 후 토큰을 로컬스토리지와 상태에 저장.
@@ -61,7 +65,21 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
             alert("로그인 실패")
         }
     };
-
+*/
+    //  login 함수 수정
+    // (LoginPage의 useMutation 성공 시 호출될 함수)
+    const login = useCallback(
+        (newAccessToken: string, newRefreshToken: string) => {
+        // 로컬 스토리지에 저장 (useLocalStorage 사용)
+        setAccessTokenInStorage(newAccessToken);
+        setRefreshTokenInStorage(newRefreshToken);
+        //  Context 상태 업데이트
+        setAccessToken(newAccessToken);
+        setRefreshToken(newRefreshToken);
+        },
+        [setAccessTokenInStorage, setRefreshTokenInStorage],
+    );
+/*
     //로그아웃: 서버 호출 후 로컬 스토리지와 상태를 정리.
     const logout = async() =>{
         try{
@@ -78,7 +96,19 @@ export const AuthProvider=({children}:PropsWithChildren)=>{
             console.error("로그아웃 오류", error);
             alert("로그아웃 실패");
         }
-    }
+    }        
+*/
+    // logout 함수 수정
+    // (Navbar의 useMutation 성공 시 호출될 함수)
+    const logout = useCallback(() => {
+        // 로컬 스토리지에서 제거 (useLocalStorage 사용)
+        removeAccessTokenFromStorage();
+        removeRefreshTokenFromStorage();
+        //  Context 상태 업데이트
+        setAccessToken(null);
+        setRefreshToken(null);
+    }, [removeAccessTokenFromStorage, removeRefreshTokenFromStorage]);
+
     return(
         //로그인 관련 데이터(accessToken, login, logout)를 앱 전체에서 쓸 수 있게 공유.
         <AuthContext.Provider value = {{accessToken, refreshToken, login, logout}}>

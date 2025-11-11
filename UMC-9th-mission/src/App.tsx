@@ -10,7 +10,6 @@ import { AuthProvider } from "./context/AuthContext";
 import GoogleLoginRedirectPage from "./pages/GoogleLoginRedirectPage";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 import LpDetailPage from "./pages/LpDetailPage";
 import ProtectedLayout from "./layouts/ProtectedLayout";
 
@@ -25,7 +24,7 @@ const publicRoutes:RouteObject[] = [
       {path: "login", element: <LoginPage/>},
       {path: "signup", element: <SignupPage/>},
       {path: "v1/auth/google/callback", element: <GoogleLoginRedirectPage/>},
-      {path: "lp/:lpid", element: <LpDetailPage /> },
+      {path: "lp/:lpId", element: <LpDetailPage /> },
     ],
   },
 ]
@@ -50,7 +49,7 @@ const protectedRoutes:RouteObject[] = [
   },
 ];
 const router = createBrowserRouter([...publicRoutes,...protectedRoutes]);
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 function App() {
  
   return(

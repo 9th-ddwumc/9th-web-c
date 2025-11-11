@@ -1,5 +1,5 @@
 //코드 실행 시에는 포함되지 않고, TypeScript 타입 검사용으로만 사용됩니다.
-import type { RequestSigninDto, RequestSignupDto, ResponseMyInfoDto, ResponseSigninDto, ResponseSignupDto } from "../types/auth"
+import type { RequestSigninDto, RequestSignupDto, RequestUpdateMyInfoDto, ResponseDeleteUserDto, ResponseMyInfoDto, ResponseSigninDto, ResponseSignupDto } from "../types/auth"
 
 import { axiosInstance } from "./axios";
 
@@ -33,4 +33,16 @@ export const postLogout = async() => {
     return data;
 };
 
+/* 내 정보 수정 API */
+export const updateMyInfo = async (
+  dto: RequestUpdateMyInfoDto
+): Promise<ResponseMyInfoDto> => { // 수정 후, 수정된 내 정보를 반환한다고 가정
+  const { data } = await axiosInstance.patch("/v1/users", dto);
+  return data;
+};
 
+// 회원 탈퇴 API 함수 추가
+export const deleteUser = async (): Promise<ResponseDeleteUserDto> => {
+  const { data } = await axiosInstance.delete("/v1/users");
+  return data;
+};

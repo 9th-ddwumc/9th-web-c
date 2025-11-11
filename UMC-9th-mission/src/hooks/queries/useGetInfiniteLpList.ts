@@ -3,7 +3,7 @@ import type { PAGINATION_ORDER } from "../../enums/common";
 import { getLpList } from "../../apis/lp";
 import { QUERY_KEY } from "../../constants/key";
 
-
+//LP 목록을 무한 스크롤로 가져오기 위한 React Query 커스텀 훅
 function useGetInfiniteLpList(
     limit:number, 
     search:string, 
