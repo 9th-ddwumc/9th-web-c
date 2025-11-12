@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(240, 239, 255);
+    }
+    header{
+        padding-top: 90px;
+        padding-bottom: 90px;
+        padding-left: 20%;
+        padding-right: 20%;
+        border-bottom: 2px solid lightgray;
+    }
+    .title{
+        font-size: 40px;
+    }
+    input{
+        margin-top: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+    .task{
+        width: 580px;
+        height: 40px;
+        border: 2px solid rgb(49, 49, 49);
+    }
+    .list{
+        display: flex;
+        justify-content: center;
+        gap: 100px;
+        padding-top: 0px;
+    }
+    .list__todoTitle{
+        text-align: center;
+        margin-right: 35%;
+        margin-left: 35%;
+        border-bottom: 3px solid lightgray;
+        width: 70px;
+    }
+    .list__doneTitle{
+        text-align: center;
+        margin-right: 40%;
+        margin-left: 40%;
+        border-bottom: 3px solid lightgray;
+        width: 50px;
+    }
+    .list__todolist, .list__donelist{
+        text-align: center;
+        width: 250px;
+        min-height: 400px;
+    }
+    .list__item{
+        padding: 5px;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 3px solid lightgray;
+    }
+    .list__btn{
+        width: 40px;
+        background-color: lightgray;
+        text-align: center;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <header>
+        <h1 class="title">UMC Study Plan</h1>
+    </header>
+    <input type = "text" class = "task" placeholder="스터디 계획을 작성해보세요!">
+
+    <div class = "list">
+        <section class="list__todo">
+            <h4 class="list__todoTitle">해야 할 일</h4>
+            <div class="list__todolist">
+                
+            </div>
+        </section>
+        <section class="list__done">
+            <h4 class="list__doneTitle">해낸 일</h4>
+            <div class="list__donelist">
+                
+            </div>
+        </section>
+    </div>
+    <script>
+        const taskInput = document.querySelector(".task");
+        const todoList = document.querySelector(".list__todolist");
+        const doneList = document.querySelector(".list__donelist");
+
+        let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+        function renderTodos() {
+            todoList.innerHTML = "";
+            doneList.innerHTML = "";
+            
+            todos.forEach((todo, index) =>{ 
+                const taskItem = document.createElement("div");
+                const taskItemDone = document.createElement("div");
+                const taskItemCancel = document.createElement("div");
+
+                taskItem.className = "list__item";
+                taskItem.textContent = todo.text;
+
+                taskItemDone.className = "list__btn";
+                taskItemDone.textContent = "완료";
+
+                taskItemCancel.className = "list__btn";
+                taskItemCancel.textContent = "삭제";
+
+                if (todo.done) {
+                    doneList.appendChild(taskItem);
+                    taskItem.appendChild(taskItemCancel);
+                } else {
+                    todoList.appendChild(taskItem);
+                    taskItem.appendChild(taskItemDone);
+                }
+
+                taskItemDone.addEventListener("click", function() {
+                    todos[index].done = true;
+                    saveAndRender();
+                });
+
+                taskItemCancel.addEventListener("click", function() {
+                    todos.splice(index, 1);
+                    saveAndRender();
+                });
+            });
+        }
+
+        function saveAndRender() {
+            localStorage.setItem("todos", JSON.stringify(todos));
+            renderTodos();
+        }
+
+        taskInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                const taskText = taskInput.value.trim();
+                if (taskText !== "") {
+                    todos.push({ text: taskText, done: false });
+                    saveAndRender();
+                    taskInput.value = "";
+                }
+            }
+        });
+
+        renderTodos();
+
+        
+    </script>
+</body>
+</html>
