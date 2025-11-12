@@ -1,0 +1,14 @@
+.nav-btn {
+  padding: 4px 8px;
+  min-width: 80px;
+  height: 32px;
+  margin-right: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background-color: #eaeaea;
+}
