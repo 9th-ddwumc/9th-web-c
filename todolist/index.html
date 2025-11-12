@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+</head>
+<style>
+    html, body{
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    body {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        background-color: beige;
+    }
+    .todo-container {
+        width: 500px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 0 15px rgba(128, 128, 128, 0.599);
+    }
+    .todo-container__header {
+        font-size: 35px;
+        font-weight: bold;
+        padding-top: 30px;
+        margin-bottom: 20px;
+    }
+    .todo-container__form {
+        margin-bottom: 10px;
+    }
+    .todo-container__input {
+        width: 300px;
+        height: 35px;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 2px solid lightgray;
+        transition: border 0.2s;
+    }
+    .todo-container__input:focus {
+        outline: none;
+        border: 2px solid rgb(51, 105, 214);
+    }
+    .todo-container__btn {
+        width: 100px;
+        height: 40px;
+        font-size: 15px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding-bottom: 3px;
+        cursor: pointer;
+    }
+    .taskList {
+        padding-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    .todo__title, .done__title {
+        font-size: 20px;
+        font-weight: bold;
+        width: 200px;
+        margin: 0;
+        padding: 0;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+    .todo__item, .done__item {
+        width: 200px;
+        height: 30px;
+        border: 2px solid lightgray;
+        background-color: lightgray;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-bottom: 5px;
+
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 3px;
+    }
+    .todo__btn{
+        width: 40px;
+        background-color: green;
+        color: white;
+        border: 0;
+        border-radius: 5px;
+    }
+    .done__btn{
+        width: 40px;
+        background-color: rgb(201, 0, 0);
+        color: white;
+        border: 0;
+        border-radius: 5px;
+    }
+</style>
+<body>
+    <div class="todo-container">
+        <h1 class="todo-container__header">TODO LIST</h1>
+
+        <div class="todo-container__form">
+            <input class="todo-container__input" type="text" placeholder="할 일 입력">
+            <button class="todo-container__btn">할 일 추가</button>
+        </div>
+        <div class ="taskList">
+            <div class="todo">
+                <h3 class="todo__title">할 일</h3>
+                <div class="todo__item">
+                    <span>HTML 공부하기</span>
+                    <button class="todo__btn">완료</button>
+                </div>
+            </div>
+            <div class="done">
+                <h3 class="done__title">완료</h3>
+                <div class="done__item">
+                    <span>CSS 공부하기</span>
+                    <button class="done__btn">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="src/todo.js"></script>
+</body>
+</html>
