@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <nav>
+    <button onclick="move('/')">홈</button>
+    <button onclick="move('/about')">소개</button>
+    <button onclick="move('/contact')">연락처</button>
+  </nav>
+  <div id="root"></div>
+
+  <script>
+    function render() {
+      const path = location.pathname;
+      const root = document.getElementById('root');
+      if(path === '/') root.innerHTML = '<h1>홈 페이지</h1>';
+      else if(path === '/about') root.innerHTML = '<h1>소개 페이지</h1>';
+      else if(path === '/contact') root.innerHTML = '<h1>전화번호 페이지</h1>';
+      else root.innerHTML = '<h1>404</h1>';
+    }
+
+    function move(url) {
+      history.pushState({}, '', url);
+      render();
+    }
+
+    window.addEventListener('popstate', render);
+    render();
+  </script>
+</body>
+</html>
