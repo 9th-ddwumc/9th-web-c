@@ -7,6 +7,7 @@ import { EllipsisVertical } from 'lucide-react';
 import { useQuery } from "@tanstack/react-query";
 import type { ResponseMyInfoDto } from "../../types/auth";
 import { getMyInfo } from "../../apis/auth";
+import { QUERY_KEY } from "../../constants/key";
 
 interface CommentItemProps {
   lpId: number;
@@ -27,7 +28,7 @@ function CommentItem({ lpId, comment }: CommentItemProps) {
   // console.log("isAuthor:", isAuthor);
 
   const { data: myInfo } = useQuery<ResponseMyInfoDto>({
-    queryKey: ["myInfo"],
+    queryKey: [QUERY_KEY.myInfo],
     queryFn: getMyInfo,
   });
 

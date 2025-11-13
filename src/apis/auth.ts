@@ -16,6 +16,7 @@ export const postSignin = async (
 };
 
 export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
+  console.trace('getMyInfo called from:'); // 호출 스택 확인
   const { data } = await axiosInstance.get("/v1/users/me");
   return data;
 };

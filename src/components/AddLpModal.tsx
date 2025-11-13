@@ -159,7 +159,7 @@ const handleAddLp = () => {
         {/* Tag Input & Add Button */}
         <div className="flex gap-2 mb-2">
           <input
-            placeholder="LP Tag (선택)"
+            placeholder="LP Tag"
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
             className="flex-1 border border-gray-500 rounded-lg px-4 py-2 placeholder-gray-500

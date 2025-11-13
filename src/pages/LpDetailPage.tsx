@@ -14,6 +14,7 @@ import type { ResponseMyInfoDto } from "../types/auth";
 import { useUpdateLp } from "../hooks/mutations/useUpdateLp";
 import { useDeleteLp } from "../hooks/mutations/useDeleteLp";
 import CommentSection from "../components/Comment/CommentSection";
+import { QUERY_KEY } from "../constants/key";
 
 const LpDetailPage = () => {
   const { lpId } = useParams<{ lpId: string }>();
@@ -27,7 +28,7 @@ const LpDetailPage = () => {
   } = useGetLpDetail({ lpId: Number(lpId) });
 
   const { data: myInfo } = useQuery<ResponseMyInfoDto>({
-    queryKey: ["myInfo"],
+    queryKey: [QUERY_KEY.myInfo],
     queryFn: getMyInfo,
   });
 

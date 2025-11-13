@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useEffect, useState } from 'react';
 import type { ResponseMyInfoDto } from '../types/auth';
 import { getMyInfo } from '../apis/auth';
 import { Search } from 'lucide-react';
 import useLogout from '../hooks/mutations/useLogout';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEY } from '../constants/key';
 
 interface NavbarProps {
   onMenuClick?: () => void;
@@ -13,25 +14,15 @@ interface NavbarProps {
 const Navbar = ({ onMenuClick }: NavbarProps) => {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
-  const [data, setData] = useState<ResponseMyInfoDto | null>(null);
 
   const { mutate: logoutMutate, isPending } = useLogout();
-
-  useEffect(() => {
-    const getData = async () => {
-      if (accessToken) { // accessToken 있을 때만 호출
-        try {
-          const response = await getMyInfo();
-          console.log(response);
-          setData(response); // response 전체를 저장
-        } catch (error) {
-          console.error("사용자 정보 로드 실패", error);
-        }
-      }
-    };
-
-    getData();
-  }, [accessToken]); // accessToken 변경될 때마다 실행
+  
+  // ✅ React Query 사용 - accessToken이 있을 때만 활성화
+  const { data } = useQuery<ResponseMyInfoDto>({
+    queryKey: [QUERY_KEY.myInfo],
+    queryFn: getMyInfo,
+    enabled: !!accessToken, // accessToken이 있을 때만 쿼리 실행
+  });
 
   const handleLogout = () => {
     logoutMutate();

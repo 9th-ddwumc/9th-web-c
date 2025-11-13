@@ -1,15 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { PropsWithChildren } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCAL_STORAGE_KEY } from "../constants/key";
+import { LOCAL_STORAGE_KEY, QUERY_KEY } from "../constants/key";
 import { postLogout, postSignin, getMyInfo } from "../apis/auth";
-import type { RequestSigninDto, ResponseMyInfoDto } from "../types/auth";
+import type { RequestSigninDto } from "../types/auth";
+import { queryClient } from "../App";
 
+// AuthContext.tsx
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
-  user: ResponseMyInfoDto | null;
-  setUser: React.Dispatch<React.SetStateAction<ResponseMyInfoDto | null>>;
   login: (signinData: RequestSigninDto) => Promise<void>;
   logout: () => Promise<void>;
   isLoading: boolean;
@@ -34,17 +34,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const [accessToken, setAccessToken] = useState(getAccessTokenFromStorage());
   const [refreshToken, setRefreshToken] = useState(getRefreshTokenFromStorage());
-  const [user, setUser] = useState<ResponseMyInfoDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // ✅ 앱 시작 시 토큰이 있으면 자동으로 유저 정보 가져오기
   useEffect(() => {
     const initializeAuth = async () => {
       const token = getAccessTokenFromStorage();
       if (token) {
         try {
-          const userInfo = await getMyInfo();
-          setUser(userInfo);
+          // React Query로 prefetch (캐시에 저장만 함)
+          await queryClient.prefetchQuery({
+            queryKey: [QUERY_KEY.myInfo],
+            queryFn: getMyInfo,
+          });
         } catch (error) {
           console.error("유저 정보 가져오기 실패", error);
           // 토큰이 만료되었을 수 있으므로 제거
@@ -69,12 +70,14 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setRefreshTokenInStorage(data.refreshToken);
       setAccessToken(data.accessToken);
       setRefreshToken(data.refreshToken);
-
-      // 유저 정보 요청
-      const userInfo = await getMyInfo();
-      setUser(userInfo);
+      
+      // 로그인 후 유저 정보 prefetch
+      queryClient.prefetchQuery({
+        queryKey: [QUERY_KEY.myInfo],
+        queryFn: getMyInfo,
+      });
     }
-  }
+  };
 
   // ✅ 로그아웃
   const logout = async () => {
@@ -84,7 +87,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       removeRefreshTokenFromStorage();
       setAccessToken(null);
       setRefreshToken(null);
-      setUser(null);
+      
+      // 로그아웃 시 유저 정보 캐시 제거
+      queryClient.removeQueries({ queryKey: [QUERY_KEY.myInfo] });
+      
       alert("로그아웃 성공");
     } catch (error) {
       console.error("로그아웃 실패", error);
@@ -94,7 +100,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthContext.Provider
-      value={{ accessToken, refreshToken, user, setUser, login, logout, isLoading }}
+      value={{ accessToken, refreshToken, login, logout, isLoading }}
     >
       {children}
     </AuthContext.Provider>
