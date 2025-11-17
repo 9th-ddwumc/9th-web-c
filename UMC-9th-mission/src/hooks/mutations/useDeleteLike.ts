@@ -4,9 +4,7 @@ import { QUERY_KEY } from "../../constants/key";
 import { deleteLike } from "../../apis/lp";
 import {type Likes, type RequestLpDto, type ResponseLpDto } from "../../types/lp";
 import type { ResponseMyInfoDto } from "../../types/auth";
-import { PrefetchPageLinks } from "react-router-dom";
-import { da } from "zod/v4/locales";
-import { ConeIcon, Variable } from "lucide-react";
+
 
 function useDeleteLike() {
     return useMutation({

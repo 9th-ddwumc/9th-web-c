@@ -23,7 +23,7 @@ const CommentList = ({ lpid, order }: CommentListProps) => {
     isPending, 
     isFetchingNextPage, 
     isError,
-  } = useGetInfiniteLpComments(lpid, order); // useGetInfiniteLpComments 훅을 호출하여 댓글 데이터를 가져옴
+  } = useGetInfiniteLpComments(lpid, order); // useGetInfiniteLpComments 훅을 호출하여 댓글 데이터를 가져옴(자동으로 새로고침)
 
   // 현재 로그인한 유저 정보 가져오기
   const { accessToken } = useAuth();

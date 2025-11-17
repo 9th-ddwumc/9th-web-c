@@ -18,9 +18,10 @@ const Sidebar = () => {
     mutationFn: deleteUser, // API 호출
     onSuccess: () => {
       alert("회원 탈퇴가 완료되었습니다.");
-      //  AuthContext의 logout 함수를 호출해 토큰 제거
+      //탈퇴 성공 시, Navbar의 로그아웃과 동일한 '클라이언트 정리' 작업을 수행
+      //  AuthContext의 logout 함수를 호출해 토큰 제거 및 컨텍스트 상태 업데이트
       logout();
-      //  'myInfo' 쿼리 캐시 제거
+      // 'myInfo' 쿼리 캐시 제거 ->Navbar UI 등에서 사용자 정보가 사라지게 함
       queryClient.removeQueries({ queryKey: ["myInfo"] });
 
       setIsDeleteModalOpen(false); // 모달 닫기

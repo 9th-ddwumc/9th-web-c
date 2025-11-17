@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import { postLike } from "../../apis/lp";
 import { queryClient } from "../../App";
 import { QUERY_KEY } from "../../constants/key";
-import { Variable } from "lucide-react";
 import type { Likes, RequestLpDto, ResponseLpDto } from "../../types/lp";
 import type { ResponseMyInfoDto } from "../../types/auth";
 

@@ -4,13 +4,24 @@ import { PAGINATION_ORDER } from "../enums/common";
 import { useInView } from "react-intersection-observer";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
 import LpCard from "../components/LpCard/LpCard";
+import useDebounce from "../hooks/useDebounce";
+import { SEARCH_DEBOUNCE_DELAY } from "../constants/delay";
 
 //메인 홈페이지 컴포넌트
 const HomePage = () => {
 const [search, setSearch] = useState("");
+const debouncedValue = useDebounce(search, SEARCH_DEBOUNCE_DELAY);
 //const {data, isPending, isError} = useGetLpList({})
 const [order, setOrder] = useState<PAGINATION_ORDER>(PAGINATION_ORDER.desc);//초기값은 'desc'(최신순)
-const {data:lps, isFetching, hasNextPage, isPending, fetchNextPage,  isError} = useGetInfiniteLpList(50, search,order);
+
+const {
+    data:lps, 
+    isFetching, 
+    hasNextPage, 
+    isPending, 
+    fetchNextPage,  
+    isError
+} = useGetInfiniteLpList(50, debouncedValue,order);
     
 //ref -> 특정한 HTML 요소를 감시할 수 있다.
 //inView -> 그  요소가 화면에 보이면 true
@@ -37,7 +48,12 @@ return  (
     <div className="container mx-auto ps-4 py-6">
    
     {/* 검색 입력창 */}
-    <input value={search} onChange={(e) => setSearch(e.target.value)}/>
+    <input 
+     className={"border p-4 rounded-sm"}
+     placeholder="검색어를 입력하세요"
+     value={search} 
+     onChange={(e) => setSearch(e.target.value)}
+     />
     
     {/* 정렬 버튼 */}
     <div className="flex gap-2">
@@ -72,7 +88,7 @@ return  (
             ?.map((page) => page.data.data) // 각 페이지의 data 배열 꺼냄
             .flat() // 배열 합치기 [[1,2],[3,4]].flat() -> [1,2,3,4]
             .map((lp) => <LpCard key={lp.id} lp={lp}/>)}
-            {isFetching&&<LpCardSkeletonList count={20}/>}
+            {isFetching && !isPending && <LpCardSkeletonList count={20}/>}
         </div>
 
         {/* 무한 스크롤 감지용 div */}

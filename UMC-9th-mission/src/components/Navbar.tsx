@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useEffect, useState } from "react";
-import { deleteUser, getMyInfo, postLogout } from "../apis/auth";
-import type { ResponseMyInfoDto } from "../types/auth";
+import { postLogout } from "../apis/auth";
 import useGetMyInfo from "../hooks/queries/useGetMyInfo";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -34,6 +32,8 @@ const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
           //  AuthContext의 logout 함수를 호출해 토큰 제거
           logout();
           //  'myInfo' 쿼리 캐시를 즉시 제거하여 UI(Nav) 업데이트
+          // (invalidateQueries(무효화)가 아님. 사용자가 없으므로 데이터를 새로 가져올 필요 X)
+          // 이 코드로 인해 'user' 상태가 undefined가 되고 UI가 즉시 로그아웃 상태로 변경됨.
           queryClient.removeQueries({ queryKey: ["myInfo"] });
           
           alert("로그아웃 성공");
@@ -42,9 +42,9 @@ const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
         onError: (error) => {
           console.error("로그아웃 오류", error);
           alert("로그아웃 실패");
-          // 실패하더라도 강제 로그아웃 처리
+          //서버 요청이 실패하더라도, 클라이언트 측에서는 강제로 로그아웃 처리
           logout(); // AuthContext의 logout 함수 호출
-          queryClient.removeQueries({ queryKey: ["myInfo"] });
+          queryClient.removeQueries({ queryKey: ["myInfo"] });//캐시 제거
           navigate("/");
         }
       });

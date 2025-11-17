@@ -10,7 +10,7 @@ import { Heart, Settings, Trash2 } from 'lucide-react';
 import usePostLike from "../hooks/mutations/usePostLike";
 import useDeleteLike from "../hooks/mutations/useDeleteLike";
 import { useMutation } from "@tanstack/react-query";
-import type { RequestUpdateLpDto, ResponseLpDto } from "../types/lp";
+import type { RequestUpdateLpDto} from "../types/lp";
 import { queryClient } from "../App";
 import { deleteLp, updateLp } from "../apis/lp";
 import { QUERY_KEY } from "../constants/key";
@@ -22,11 +22,13 @@ const LpDetailPage = () => {
   const {lpId} = useParams();
   const {accessToken} = useAuth();
 
+   // [데이터] 1. LP 상세 정보 가져오기 (React Query 커스텀 훅)
   const{
     data:lp, 
     isPending, 
     isError
   } = useGetLpDetail({lpId:Number(lpId)})
+  // [데이터] 2. 현재 로그인한 '내 정보' 가져오기 (React Query 커스텀 훅)
   const {data:me} = useGetMyInfo(accessToken);
 
   // 현재 유저가 작성자인지 확인
@@ -93,6 +95,7 @@ const LpDetailPage = () => {
   // 수정 모달 열기 핸들러
   const openModifyModal = () => {
     if (lp?.data) {
+      // 모달을 열 때, 현재 LP 데이터로 폼 내용을 미리 채움
       setEditedTitle(lp.data.title);
       setEditedContent(lp.data.content);
       setIsModifyModalOpen(true);
@@ -101,7 +104,7 @@ const LpDetailPage = () => {
 
   // LP 수정 제출 핸들러
   const handleModifySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // 폼 기본 동작(새로고침) 방지
     const title = editedTitle.trim();
     const content = editedContent.trim();
     if (!title || !content) {
