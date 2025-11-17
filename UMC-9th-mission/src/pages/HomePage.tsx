@@ -6,6 +6,7 @@ import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
 import LpCard from "../components/LpCard/LpCard";
 import useDebounce from "../hooks/useDebounce";
 import { SEARCH_DEBOUNCE_DELAY } from "../constants/delay";
+import useThrottle from "../hooks/useThrottle";
 
 //메인 홈페이지 컴포넌트
 const HomePage = () => {
@@ -21,7 +22,7 @@ const {
     isPending, 
     fetchNextPage,  
     isError
-} = useGetInfiniteLpList(50, debouncedValue,order);
+} = useGetInfiniteLpList(10, debouncedValue,order);
     
 //ref -> 특정한 HTML 요소를 감시할 수 있다.
 //inView -> 그  요소가 화면에 보이면 true
@@ -30,13 +31,18 @@ const{ref, inView} = useInView({
 });
 
 
+const throttledInView = useThrottle(inView, 1000); // 1초에 한 번만 true 허용
 
 useEffect(() => {
-    if(inView){
+    if(throttledInView){
         !isFetching && hasNextPage && fetchNextPage()
     }
-},[inView,isFetching, hasNextPage, fetchNextPage])
+},[throttledInView,isFetching, hasNextPage, fetchNextPage])
 
+
+useEffect(() => {
+  console.log("🔥 throttledInView 발생! (1초에 한 번만 실행됨)", throttledInView);
+}, [throttledInView]);
 
 if(isError){
     return <div className={"mt-20"}>error</div>
