@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Search, User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../apis/axios";
 import DeleteUserModal from "./DeleteUserModal";
@@ -14,6 +14,36 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { accessToken } = useAuth();
+
+  // ESC 키 눌러서 Sidebar 닫기
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    };
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  // 스크롤 방지
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    }
+  })
 
   const deleteMutate = useMutation({
     mutationFn: async () => {

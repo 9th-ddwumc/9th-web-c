@@ -5,14 +5,15 @@ import Footer from '../components/Footer';
 import FloatingButton from '../components/FloatingButton';
 import Sidebar from '../components/Sidebar';
 import AddLpModal from '../components/AddLpModal';
+import useSidebar from '../hooks/useSidebar';
 
 const HomeLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { isOpen: isSidebarOpen, open: openSidebar, close: closeSidebar } = useSidebar();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) setIsSidebarOpen(false);
+      if (window.innerWidth < 768) closeSidebar();
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -20,9 +21,9 @@ const HomeLayout = () => {
 
   return (
     <div className='h-dvh flex flex-col bg-black'>
-      <Navbar onMenuClick={() => setIsSidebarOpen(true)}/>
+      <Navbar onMenuClick={openSidebar}/>
       <div className='flex flex-1 overflow-hidden'>
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+        <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
         <main className='flex-1 overflow-y-auto'>
           <Outlet />
           <FloatingButton onClick={() => setIsModalOpen(true)} />
