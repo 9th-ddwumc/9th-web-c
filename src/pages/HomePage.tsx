@@ -9,6 +9,7 @@ import LoadingSpinner from "../components/Common/LoadingSpinner";
 import useDebounce from "../hooks/useDebounce";
 import { SEARCH_DEBOUNCE_DELAY } from "../constants/delay";
 import SortButton from "../components/SortButton";
+import useThrottle from "../hooks/useThrottle";
 
 const HomePage = () => {
   // const [searchInput, setSearchInput] = useState("");
@@ -30,14 +31,25 @@ const HomePage = () => {
     threshold: 0,
   });
 
+  // 원본 inView 변화 확인 (throttle 전)
   useEffect(() => {
-    if (inView && hasNextPage && !isFetching) {
-      const timer = setTimeout(() => {
-        fetchNextPage();
-      });
-      return () => clearTimeout(timer);
+    console.log('🔴 원본 inView:', inView, new Date().toLocaleTimeString());
+  }, [inView]);
+
+  // inView를 throttle 처리
+  const throttledInView = useThrottle(inView, 2000);
+
+  // throttle된 값 변화 확인 (throttle 후)
+  useEffect(() => {
+    console.log('🟢 throttled inView:', throttledInView, new Date().toLocaleTimeString());
+  }, [throttledInView]);
+
+  useEffect(() => {
+    if (throttledInView && hasNextPage && !isFetching) {
+      console.log('✅ fetchNextPage 호출!', new Date().toLocaleTimeString());
+      fetchNextPage();
     }
-  }, [inView, isFetching, hasNextPage, fetchNextPage]);
+  }, [throttledInView, isFetching, hasNextPage, fetchNextPage]);
 
   return (
     <div className="p-8">
@@ -47,7 +59,8 @@ const HomePage = () => {
             value={search}
             placeholder="LP 검색..."
             onChange={(e) => setSearch(e.target.value)}
-            className="text-white placeholder-gray-400 bg-[#212121] border border-gray-600 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+            className="text-white placeholder-gray-400 bg-[#212121] border border-gray-600 px-4 py-2 rounded-lg
+              focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent"
           />
         </form>
 

@@ -1,1 +1,3 @@
 export const SEARCH_DEBOUNCE_DELAY = 500;
+
+export const FETCH_THROTTLE_DELAY = 2000;
