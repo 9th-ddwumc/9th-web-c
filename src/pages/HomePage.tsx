@@ -8,6 +8,7 @@ import ErrorMessage from "../components/Common/ErrorMessage";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import useDebounce from "../hooks/useDebounce";
 import { SEARCH_DEBOUNCE_DELAY } from "../constants/delay";
+import SortButton from "../components/SortButton";
 
 const HomePage = () => {
   // const [searchInput, setSearchInput] = useState("");
@@ -50,29 +51,11 @@ const HomePage = () => {
           />
         </form>
 
-        <div className="flex gap-3">
-          <button
-            onClick={() => setOrder(PAGINATION_ORDER.asc)}
-            className={`px-4 py-2 rounded-full font-medium transition-colors ${
-              order === PAGINATION_ORDER.asc
-                ? "bg-white text-black"
-                : "bg-transparent text-white border border-gray-700 hover:border-gray-500"
-            }`}
-          >
-            오래된순
-          </button>
-
-          <button
-            onClick={() => setOrder(PAGINATION_ORDER.desc)}
-            className={`px-4 py-2 rounded-full font-medium transition-colors ${
-              order === PAGINATION_ORDER.desc
-                ? "bg-white text-black"
-                : "bg-transparent text-white border border-gray-700 hover:border-gray-500"
-            }`}
-          >
-            최신순
-          </button>
-        </div>
+      {/* 정렬 버튼 */}
+      <SortButton
+        selectedOrder={order}
+        onChangeOrder={setOrder}
+      />
       </div>
 
       {/* 에러 상태 */}

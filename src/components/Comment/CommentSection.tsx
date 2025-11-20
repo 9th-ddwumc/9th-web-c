@@ -5,6 +5,7 @@ import CommentSkeleton from './CommentSkeleton';
 import { PAGINATION_ORDER } from '../../enums/common';
 import useGetInfiniteCommentList from '../../hooks/queries/useGetInfiniteCommentList';
 import useCreateComment from '../../hooks/mutations/useCreateComment';
+import SortButton from '../SortButton';
 
 interface CommentSectionProps {
   lpId: number;
@@ -56,28 +57,11 @@ function CommentSection({ lpId }: CommentSectionProps) {
       <div className='flex items-center justify-between mb-4'>
         <h2 className='text-xl font-bold text-white'>댓글</h2>
 
-        <div className="flex gap-3">
-          <button
-            onClick={() => setOrder(PAGINATION_ORDER.asc)}
-            className={`px-4 py-1.5 rounded-full font-medium transition-colors ${
-              order === PAGINATION_ORDER.asc
-                ? 'bg-white text-black'
-                : 'bg-transparent text-white border border-gray-700 hover:border-gray-500'
-            }`}
-          >
-            오래된순
-          </button>
-          <button
-            onClick={() => setOrder(PAGINATION_ORDER.desc)}
-            className={`px-4 py-1.5 rounded-full font-medium transition-colors ${
-              order === PAGINATION_ORDER.desc
-                ? 'bg-white text-black'
-                : 'bg-transparent text-white border border-gray-700 hover:border-gray-500'
-            }`}
-          >
-            최신순
-          </button>
-        </div>
+      {/* 정렬 버튼 */}
+      <SortButton
+        selectedOrder={order}
+        onChangeOrder={setOrder}
+      />
       </div>
 
       <div className='flex gap-2 mt-4'>

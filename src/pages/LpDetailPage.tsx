@@ -3,10 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Heart, Pencil, Trash2, Check, X } from "lucide-react";
 import { getMyInfo } from "../apis/auth";
-
 import usePostLike from "../hooks/mutations/usePostLike";
 import useDeleteLike from "../hooks/mutations/useDeleteLike";
-
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import ErrorMessage from "../components/Common/ErrorMessage";
 import useGetLpDetail from "../hooks/queries/useGetLpDetail";
